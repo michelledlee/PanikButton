@@ -1,4 +1,4 @@
-package com.example.panikbutton.ui.profile.contacts
+package com.example.panikbutton.ui.profile.contactDetail
 
 import android.content.Context
 import androidx.lifecycle.ViewModel
@@ -15,6 +15,10 @@ class ContactDetailViewModel(private val dataSource: DataSource) : ViewModel() {
     /* Queries datasource to remove a contact. */
     fun removeContact(contact: Contact) {
         dataSource.removeContact(contact)
+    }
+
+    fun editContact(contact: Contact) {
+
     }
 }
 

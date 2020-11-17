@@ -1,14 +1,17 @@
-package com.example.panikbutton.ui.profile.contacts
+package com.example.panikbutton.ui.profile.contactDetail
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.example.panikbutton.R
+import com.example.panikbutton.ui.profile.addContact.AddContactActivity
+import com.example.panikbutton.ui.profile.mainProfile.CONTACT_ID
 
 class ContactDetailActivity : AppCompatActivity() {
+    private val newContactActivityRequestCode = 1
 
     private val contactDetailViewModel by viewModels<ContactDetailViewModel> {
         ContactDetailViewModelFactory(this)
@@ -25,7 +28,7 @@ class ContactDetailActivity : AppCompatActivity() {
 //        val contactImage: ImageView = findViewById(R.id.flower_detail_image)
         val contactPhone: TextView = findViewById(R.id.contact_phone)
         val contactEmail: TextView = findViewById(R.id.contact_email)
-        val editContactButton: Button = findViewById(R.id.edit_contact_button)
+//        val editContactButton: Button = findViewById(R.id.edit_contact_button)
 
         val bundle: Bundle? = intent.extras
         if (bundle != null) {
@@ -44,13 +47,20 @@ class ContactDetailActivity : AppCompatActivity() {
             contactPhone.text = currentContact?.contactPhone.toString()
             contactEmail.text = currentContact?.contactEmail
 
-            editContactButton.setOnClickListener {
-                if (currentContact != null) {
-                    contactDetailViewModel.removeContact(currentContact)
-                }
-                finish()
-            }
+//            editContactButton.setOnClickListener {
+////                if (currentContact != null) {
+////                    contactDetailViewModel.editContact(currentContact)
+////                }
+////                finish()
+//                editContactOnClick()
+//            }
         }
 
+    }
+
+    /* Brings up the edit contact screen when clicked. */
+    private fun editContactOnClick() {
+        val intent = Intent(this, EditContactActivity::class.java)
+        startActivityForResult(intent, newContactActivityRequestCode)
     }
 }

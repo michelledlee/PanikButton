@@ -31,6 +31,17 @@ class DataSource(resources: Resources) {
         }
     }
 
+    /* Edits contact from liveData and posts value. */
+    // TODO: 11/17/2020  
+    fun editContact(contact: Contact) {
+        val currentList = contactsLiveData.value
+        if (currentList != null) {
+            val updatedList = currentList.toMutableList()
+            updatedList.remove(contact)
+            contactsLiveData.postValue(updatedList)
+        }
+    }
+
     /* Returns contact given an ID. */
     fun getContactForId(id: Long): Contact? {
         contactsLiveData.value?.let { contacts ->

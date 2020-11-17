@@ -1,16 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/contact_container"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingTop="?attr/actionBarSize">
+    android:layout_height="wrap_content">
 
     <TextView
         android:id="@+id/contact_name"
         style="@style/title_header"
-        android:layout_marginLeft="8dp"
+
         android:text="Contact Name"
         android:textSize="14sp"
         android:textStyle="bold"
@@ -34,13 +32,6 @@
         android:text="Contact email"
         android:textSize="14sp"
         app:layout_constraintStart_toStartOf="@+id/contact_phone"
-        app:layout_constraintTop_toBottomOf="@+id/contact_phone" />
-
-    <Button
-        android:id="@+id/edit_contact_button"
-        style="@style/button_style"
-        android:text="@string/edit_text"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/contact_phone" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

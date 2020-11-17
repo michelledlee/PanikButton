@@ -16,7 +16,7 @@ class AboutActivity : AppCompatActivity() {
         setContentView(R.layout.activity_about)
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.setDisplayShowHomeEnabled(true);
+        supportActionBar?.setDisplayShowHomeEnabled(true)
 
         bottomNav = findViewById(R.id.navigation_home)
         bottomNav.setOnClickListener {

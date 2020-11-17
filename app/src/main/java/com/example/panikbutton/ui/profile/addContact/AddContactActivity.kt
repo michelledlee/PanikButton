@@ -1,4 +1,4 @@
-package com.example.panikbutton.ui.profile.contacts
+package com.example.panikbutton.ui.profile.addContact
 
 import android.app.Activity
 import android.content.Intent
@@ -22,7 +22,7 @@ class AddContactActivity : AppCompatActivity() {
         setContentView(R.layout.add_contact_layout)
 
         findViewById<Button>(R.id.done_button).setOnClickListener {
-            addFlower()
+            addContact()
         }
         addContactName = findViewById(R.id.add_contact_name)
         addContactPhone = findViewById(R.id.add_contact_phone)
@@ -30,11 +30,10 @@ class AddContactActivity : AppCompatActivity() {
 
     }
 
-    /* The onClick action for the done button. Closes the activity and returns the new flower name
+    /* The onClick action for the done button. Closes the activity and returns the new contact name
     and description as part of the intent. If the name or description are missing, the result is set
     to cancelled. */
-
-    private fun addFlower() {
+    private fun addContact() {
         val resultIntent = Intent()
 
         if (addContactName.text.isNullOrEmpty() || addContactPhone.text.isNullOrEmpty()) {

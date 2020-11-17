@@ -1,8 +1,9 @@
-package com.example.panikbutton.data
+package com.example.panikbutton.ui.todelete
 
 import android.app.Application
 import androidx.lifecycle.MutableLiveData
 import com.example.panikbutton.R
+import com.example.panikbutton.data.Contact
 import com.example.panikbutton.utilities.FileHelper
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi

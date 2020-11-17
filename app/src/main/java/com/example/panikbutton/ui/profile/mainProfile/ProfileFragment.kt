@@ -1,4 +1,4 @@
-package com.example.panikbutton.ui.profile//package com.example.panikbutton.ui.todelete
+package com.example.panikbutton.ui.profile.mainProfile//package com.example.panikbutton.ui.todelete
 
 import android.content.Context
 import android.os.Bundle

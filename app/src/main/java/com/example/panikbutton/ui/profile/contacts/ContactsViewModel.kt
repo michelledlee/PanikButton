@@ -1,12 +1,9 @@
 package com.example.panikbutton.ui.profile.contacts
 
-import android.app.Application
 import android.content.Context
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.panikbutton.data.Contact
-import com.example.panikbutton.data.ContactRepository
 import com.example.panikbutton.data.DataSource
 import java.lang.IllegalArgumentException
 import kotlin.random.Random

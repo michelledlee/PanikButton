@@ -1,16 +1,25 @@
 package com.example.panikbutton.ui.profile.contacts
 
+import android.app.Activity
 import android.content.Context
+import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.app.ActivityCompat.startActivityForResult
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.panikbutton.R
 import com.example.panikbutton.data.Contact
+import com.example.panikbutton.ui.profile.contactDetail.EditContactActivity
+import com.google.android.material.internal.ContextUtils.getActivity
+
 
 class ContactsAdapter(private val onClick: (Contact) -> Unit) :
     ListAdapter<Contact, ContactsAdapter.ContactViewHolder>(ContactDiffCallback) {
@@ -26,9 +35,9 @@ class ContactsAdapter(private val onClick: (Contact) -> Unit) :
 
         init {
             itemView.setOnClickListener {
-                currentContact?.let {
-                    onClick(it)
-                }
+                val activity = itemView.context as Activity
+                val intent = Intent(activity, EditContactActivity::class.java)
+                activity.startActivity(intent)
             }
         }
 
@@ -36,7 +45,10 @@ class ContactsAdapter(private val onClick: (Contact) -> Unit) :
         fun bind(contact: Contact) {
             currentContact = contact
 
+            Log.e("contactName", contact.contactName)
             contactNameTextView.text = contact.contactName
+            contactPhoneTextView.text = contact.contactPhone.toString()
+            contactEmailTextView.text = contact.contactEmail
             // EXTRA: For if we want to set avatar images later
 //            if (contact.image != null) {
 //                contactImageView.setImageResource(contact.image)
@@ -64,6 +76,6 @@ object ContactDiffCallback : DiffUtil.ItemCallback<Contact>() {
     }
 
     override fun areContentsTheSame(oldItem: Contact, newItem: Contact): Boolean {
-        return oldItem.contactPhone == newItem.contactPhone
+        return oldItem.id == newItem.id
     }
 }

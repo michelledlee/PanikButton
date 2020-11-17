@@ -10,7 +10,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.panikbutton.ui.about.AboutActivity
-import com.example.panikbutton.ui.profile.ProfileActivity
+import com.example.panikbutton.ui.profile.mainProfile.ProfileActivity
 import com.example.panikbutton.ui.settings.SettingsActivity
 
 class MainActivity : AppCompatActivity() {

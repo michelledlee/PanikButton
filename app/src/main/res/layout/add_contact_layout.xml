@@ -9,10 +9,12 @@
         android:id="@+id/add_contact_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
         android:paddingTop="16dp"
         android:paddingBottom="16dp"
-        android:text="@string/add_contact"
-        android:textSize="18sp"
+        android:text="@string/new_contact"
+        android:textSize="24sp"
         android:textStyle="bold" />
 
     <com.google.android.material.textfield.TextInputLayout
@@ -22,11 +24,11 @@
         android:paddingTop="16dp"
         android:paddingBottom="16dp">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/add_contact_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/hint_name" />
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/add_contact_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/hint_name" />
 
     </com.google.android.material.textfield.TextInputLayout>
 

@@ -23,9 +23,22 @@
             android:label="@string/title_about">
         </activity>
         <activity
-            android:name=".ui.profile.ProfileActivity"
+            android:name=".ui.profile.mainProfile.ProfileActivity"
             android:label="@string/title_profile">
         </activity>
+        <activity
+            android:name=".ui.profile.addContact.AddContactActivity"
+            android:label="@string/add_contact_title">
+        </activity>
+        <activity
+            android:name=".ui.profile.contactDetail.EditContactActivity"
+            android:label="@string/edit_contact">
+        </activity>
+        <activity
+            android:name=".ui.profile.contactDetail.ContactDetailActivity"
+            android:label="@string/contact_detail">
+        </activity>
+
         <activity
             android:name=".ui.settings.SettingsActivity"
             android:label="@string/title_settings">
