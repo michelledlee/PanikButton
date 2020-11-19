@@ -22,20 +22,17 @@ class ProfileFragment : Fragment() {
         val view: View = inflater.inflate(R.layout.fragment_profile, container, false)
 
         val sharedPref = activity?.getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE)
-        val defaultValue = "default value"
-        val enteredUserInfo = sharedPref?.getBoolean(getString(R.string.entered_user_info), false)
 
-        //TODO("Make the dialog to enter stuff")
-        if (!enteredUserInfo!!) {
+        val defaultUserNameValue = resources.getString(R.string.user_name)
+        val defaultUserPhoneValue = resources.getString(R.string.user_name)
+        val defaultUserEmailValue = resources.getString(R.string.user_name)
+        val currentUserName = sharedPref?.getString(getString(R.string.current_user_name), defaultUserNameValue)
+        val currentPhoneName = sharedPref?.getString(getString(R.string.current_phone_name), defaultUserPhoneValue)
+        val currentEmailName = sharedPref?.getString(getString(R.string.current_email_name), defaultUserEmailValue)
 
-        }
-        val userName = sharedPref?.getString(getString(R.string.user_name), defaultValue)
-        val userPhone = sharedPref?.getString(getString(R.string.user_phone), defaultValue)
-        val userEmail = sharedPref?.getString(getString(R.string.user_email), defaultValue)
-
-        view.profile_userName.text = userName
-        view.profile_userPhone.text = userPhone
-        view.profile_userEmail.text = userEmail
+        view.profile_userName.text = currentUserName
+        view.profile_userPhone.text = currentPhoneName
+        view.profile_userEmail.text = currentEmailName
 
         view.profile_editButton.setOnClickListener {
             val intent = Intent (activity, EditProfileActivity::class.java)

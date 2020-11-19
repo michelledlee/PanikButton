@@ -18,6 +18,9 @@
     <string name="user_name">null</string>
     <string name="user_phone">null</string>
     <string name="user_email">null</string>
+    <string name="current_user_name">currentUserName</string>
+    <string name="current_phone_name">currentPhoneName</string>
+    <string name="current_email_name">currentEmailName</string>
     <string name="updated_name">Name: %s</string>
     <string name="updated_phone">Phone: %s</string>
     <string name="updated_email">Email: %s</string>
@@ -38,7 +41,8 @@
     <string name="edit_contact">Edit Contact</string>
     <string name="delete">Delete</string>
     <string name="edit_profile_title">Edit Profile</string>
+    <string name="new_profile">New Profile</string>
     <string name="default_text_message">%s %s is in need of emergency assistance. Please contact the local authorities for help as soon as possible.</string>
-    <string name="entered_user_info">true</string>
-
+    <string name="entered_user_info">false</string>
+    <string name="okay">Okay</string>
 </resources>
