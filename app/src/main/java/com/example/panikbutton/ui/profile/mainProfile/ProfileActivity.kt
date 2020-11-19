@@ -17,7 +17,8 @@ import com.example.panikbutton.ui.profile.addContact.AddContactActivity
 import com.example.panikbutton.ui.profile.addContact.CONTACT_EMAIL
 import com.example.panikbutton.ui.profile.addContact.CONTACT_NAME
 import com.example.panikbutton.ui.profile.addContact.CONTACT_PHONE
-import com.example.panikbutton.ui.profile.contactDetail.ContactDetailActivity
+import com.example.panikbutton.ui.profile.contactDetail.EditContactActivity
+//import com.example.panikbutton.ui.profile.contactDetail.ContactDetailActivity
 import com.example.panikbutton.ui.profile.contacts.*
 
 const val CONTACT_ID = "contact id"
@@ -67,9 +68,9 @@ class ProfileActivity : AppCompatActivity() {
 
     }
 
-    /* Opens ContactDetailActivity when RecyclerView item is clicked. */
+    /* Opens EditDetailActivity when RecyclerView item is clicked. */
     private fun adapterOnClick(contact: Contact) {
-        val intent = Intent(this, ContactDetailActivity()::class.java)
+        val intent = Intent(this, EditContactActivity()::class.java)
         intent.putExtra(CONTACT_ID, contact.id)
         startActivity(intent)
     }
@@ -79,7 +80,6 @@ class ProfileActivity : AppCompatActivity() {
         val intent = Intent(this, AddContactActivity::class.java)
         startActivityForResult(intent, newContactActivityRequestCode)
     }
-
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, intentData: Intent?) {
         super.onActivityResult(requestCode, resultCode, intentData)
@@ -98,6 +98,7 @@ class ProfileActivity : AppCompatActivity() {
         onBackPressed()
         return super.onSupportNavigateUp()
     }
+
     companion object {
         fun start(context: Context) {
             val intent = Intent(context, ProfileActivity::class.java)

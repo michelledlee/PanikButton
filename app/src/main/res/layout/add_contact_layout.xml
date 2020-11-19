@@ -56,13 +56,28 @@
             android:hint="@string/hint_email" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <Button
-        android:id="@+id/done_button"
-        style="@style/button_style"
-        android:layout_width="240dp"
+    <LinearLayout
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:paddingTop="16dp"
-        android:paddingBottom="16dp"
-        android:text="@string/done" />
+        android:orientation="horizontal">
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <Button
+            android:id="@+id/done_button"
+            style="@style/button_style"
+            android:text="@string/done" />
+    </LinearLayout>
+<!--    <Button-->
+<!--        android:id="@+id/done_button"-->
+<!--        style="@style/button_style"-->
+<!--        android:layout_width="240dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_gravity="center"-->
+<!--        android:paddingTop="16dp"-->
+<!--        android:paddingBottom="16dp"-->
+<!--        android:text="@string/done" />-->
 </LinearLayout>

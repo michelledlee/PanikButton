@@ -6,14 +6,14 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/edit_contact_title"
+        android:id="@+id/edit_profile_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:paddingTop="16dp"
         android:paddingBottom="16dp"
-        android:text="@string/edit_contact"
+        android:text="@string/edit_profile_title"
         android:textSize="24sp"
         android:textStyle="bold" />
 
@@ -25,10 +25,10 @@
         android:paddingBottom="16dp">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edit_contact_name"
+            android:id="@+id/edit_user_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="text" />
+            android:hint="@string/hint_name" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -37,9 +37,10 @@
         android:layout_height="wrap_content">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edit_contact_phone"
+            android:id="@+id/edit_user_phone"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:hint="@string/hint_phone" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -49,9 +50,10 @@
         android:paddingBottom="16dp">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edit_contact_email"
+            android:id="@+id/edit_user_email"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:hint="@string/hint_email" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <LinearLayout
@@ -65,12 +67,7 @@
             android:layout_weight="1" />
 
         <Button
-            android:id="@+id/delete_contact_button"
-            style="@style/button_style"
-            android:text="@string/delete" />
-
-        <Button
-            android:id="@+id/save_contact_profile"
+            android:id="@+id/save_user_profile"
             android:text="@string/save_text"
             style="@style/button_style"/>
 

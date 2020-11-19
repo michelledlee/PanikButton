@@ -22,7 +22,6 @@
         android:id="@+id/profile_userName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
         app:layout_constraintStart_toStartOf="@+id/profile_title"
         app:layout_constraintTop_toBottomOf="@+id/profile_title" />
 
@@ -30,7 +29,6 @@
         android:id="@+id/profile_userPhone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
         app:layout_constraintStart_toStartOf="@+id/profile_userName"
         app:layout_constraintTop_toBottomOf="@+id/profile_userName" />
 
@@ -38,7 +36,6 @@
         android:id="@+id/profile_userEmail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
         app:layout_constraintStart_toStartOf="@+id/profile_userPhone"
         app:layout_constraintTop_toBottomOf="@+id/profile_userPhone" />
 

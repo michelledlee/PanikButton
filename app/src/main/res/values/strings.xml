@@ -38,5 +38,7 @@
     <string name="edit_contact">Edit Contact</string>
     <string name="delete">Delete</string>
     <string name="edit_profile_title">Edit Profile</string>
+    <string name="default_text_message">%s %s is in need of emergency assistance. Please contact the local authorities for help as soon as possible.</string>
+    <string name="entered_user_info">true</string>
 
 </resources>

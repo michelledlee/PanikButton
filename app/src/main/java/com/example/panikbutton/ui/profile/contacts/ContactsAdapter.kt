@@ -1,24 +1,21 @@
 package com.example.panikbutton.ui.profile.contacts
 
+import android.R.attr.key
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
+import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ImageView
 import android.widget.TextView
-import androidx.core.app.ActivityCompat.startActivityForResult
-import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.panikbutton.R
 import com.example.panikbutton.data.Contact
 import com.example.panikbutton.ui.profile.contactDetail.EditContactActivity
-import com.google.android.material.internal.ContextUtils.getActivity
+import com.example.panikbutton.ui.profile.mainProfile.CONTACT_ID
 
 
 class ContactsAdapter(private val onClick: (Contact) -> Unit) :
@@ -35,9 +32,9 @@ class ContactsAdapter(private val onClick: (Contact) -> Unit) :
 
         init {
             itemView.setOnClickListener {
-                val activity = itemView.context as Activity
-                val intent = Intent(activity, EditContactActivity::class.java)
-                activity.startActivity(intent)
+                currentContact?.let {
+                    onClick(it)
+                }
             }
         }
 
@@ -67,6 +64,10 @@ class ContactsAdapter(private val onClick: (Contact) -> Unit) :
     override fun onBindViewHolder(holder: ContactViewHolder, position: Int) {
         val contact = getItem(position)
         holder.bind(contact)
+    }
+
+    fun getContact(holder: ContactViewHolder, position:Int): Contact {
+        return getItem(position)
     }
 }
 
