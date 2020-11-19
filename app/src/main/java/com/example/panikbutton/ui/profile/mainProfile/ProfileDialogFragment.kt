@@ -54,7 +54,7 @@ class ProfileDialogFragment : DialogFragment() {
                     val inputtedEmail = view.findViewById<TextInputEditText>(R.id.edit_profile_email).text.toString()
 
                     if (inputtedName != "" && inputtedPhone != "" && inputtedEmail != "") {
-                        sharedPref.edit().putBoolean(getString(R.string.entered_user_info), true).apply()
+                        sharedPref.edit().putString(getString(R.string.entered_user_info), "false").apply()
                         sharedPref.edit().putString(getString(R.string.current_user_name), inputtedName).apply()
                         sharedPref.edit().putString(getString(R.string.current_phone_name), inputtedPhone).apply()
                         sharedPref.edit().putString(getString(R.string.current_email_name), inputtedEmail).apply()

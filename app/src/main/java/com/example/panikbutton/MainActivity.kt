@@ -60,8 +60,8 @@ class MainActivity : AppCompatActivity(), ProfileDialogFragment.ProfileDialogLis
         // Getting default user values from SharedPreferences
         val sharedPref = this.getSharedPreferences(
             getString(R.string.preference_file_key), Context.MODE_PRIVATE)
-        val initialStart = sharedPref.getBoolean(getString(R.string.entered_user_info), false)
-        if (!initialStart) {
+        val initialStart = sharedPref.getString(getString(R.string.entered_user_info), "true")
+        if (initialStart == "true") {
             showProfileDialog()
         }
     }
