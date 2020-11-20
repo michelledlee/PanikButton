@@ -13,7 +13,7 @@ class ContactsViewModel(val dataSource: DataSource) : ViewModel() {
     val contactLiveData = dataSource.getContactList()
 
     /* If the name and email or phone are present, create new Contact and add it to the datasource */
-    fun insertContact(contactName: String?, contactPhone: Int, contactEmail: String?) {
+    fun insertContact(contactName: String?, contactPhone: Long, contactEmail: String?) {
         if (contactName == null) {
             return
         }

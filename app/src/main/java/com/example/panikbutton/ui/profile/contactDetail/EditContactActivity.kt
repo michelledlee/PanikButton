@@ -72,16 +72,16 @@ class EditContactActivity : AppCompatActivity() {
         val resultIntent = Intent()
         if (editContactName.text.isNullOrEmpty() || editContactPhone.text.isNullOrEmpty()) {
             setResult(Activity.RESULT_CANCELED, resultIntent)
-            Log.e("Added", "from addContact - cancelled")
         } else {
             val name = editContactName.text.toString()
-            val phone = editContactPhone.text.toString()
+            val phone = editContactPhone.text.toString().toLong()
             val email = editContactEmail.text.toString()
             resultIntent.putExtra(CONTACT_NAME, name)
             resultIntent.putExtra(CONTACT_PHONE, phone)
+            Log.e("phone", phone.toString())
+
             resultIntent.putExtra(CONTACT_EMAIL, email)
             setResult(Activity.RESULT_OK, resultIntent)
-            Log.e("Added", "from addContact - new added!")
 
         }
         finish()

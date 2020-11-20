@@ -2,13 +2,17 @@ package com.example.panikbutton.ui.profile.contacts
 
 import android.R.attr.key
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.telephony.PhoneNumberUtils.formatNumber
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.core.content.ContextCompat.getSystemService
+import androidx.core.os.ConfigurationCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -16,6 +20,7 @@ import com.example.panikbutton.R
 import com.example.panikbutton.data.Contact
 import com.example.panikbutton.ui.profile.contactDetail.EditContactActivity
 import com.example.panikbutton.ui.profile.mainProfile.CONTACT_ID
+import java.util.*
 
 
 class ContactsAdapter(private val onClick: (Contact) -> Unit) :
@@ -42,9 +47,16 @@ class ContactsAdapter(private val onClick: (Contact) -> Unit) :
         fun bind(contact: Contact) {
             currentContact = contact
 
-            Log.e("contactName", contact.contactName)
             contactNameTextView.text = contact.contactName
-            contactPhoneTextView.text = contact.contactPhone.toString()
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+                contactPhoneTextView.text = formatNumber(
+                    contact.contactPhone.toString(),
+                    Locale.getDefault().country
+                )
+                Log.e("number", contactPhoneTextView.text.toString())
+                Log.e("country", Locale.getDefault().country.toString())
+
+            }
             contactEmailTextView.text = contact.contactEmail
             // EXTRA: For if we want to set avatar images later
 //            if (contact.image != null) {

@@ -87,7 +87,7 @@ class ProfileActivity : AppCompatActivity() {
         if (requestCode == newContactActivityRequestCode && resultCode == Activity.RESULT_OK) {
             intentData?.let { data ->
                 val contactName = data.getStringExtra(CONTACT_NAME)
-                val contactPhone = data.getIntExtra(CONTACT_PHONE, -1)
+                val contactPhone = data.getLongExtra(CONTACT_PHONE, -1)
                 val contactEmail = data.getStringExtra(CONTACT_EMAIL)
                 contactsListViewModel.insertContact(contactName, contactPhone, contactEmail)
             }
