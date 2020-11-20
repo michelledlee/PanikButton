@@ -72,7 +72,7 @@ class ProfileActivity : AppCompatActivity() {
     private fun adapterOnClick(contact: Contact) {
         val intent = Intent(this, EditContactActivity()::class.java)
         intent.putExtra(CONTACT_ID, contact.id)
-        startActivity(intent)
+        startActivityForResult(intent, newContactActivityRequestCode)
     }
 
     /* Adds contact to contactList when button is clicked. */
@@ -83,7 +83,7 @@ class ProfileActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, intentData: Intent?) {
         super.onActivityResult(requestCode, resultCode, intentData)
-        /* Inserts contact into viewModel. */
+        // Inserts contact into viewModel.
         if (requestCode == newContactActivityRequestCode && resultCode == Activity.RESULT_OK) {
             intentData?.let { data ->
                 val contactName = data.getStringExtra(CONTACT_NAME)

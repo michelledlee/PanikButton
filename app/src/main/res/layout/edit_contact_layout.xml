@@ -71,8 +71,8 @@
 
         <Button
             android:id="@+id/save_contact_profile"
-            android:text="@string/save_text"
-            style="@style/button_style"/>
+            style="@style/button_style"
+            android:text="@string/save_text" />
 
     </LinearLayout>
 </LinearLayout>

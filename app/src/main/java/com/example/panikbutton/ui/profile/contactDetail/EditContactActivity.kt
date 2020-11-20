@@ -12,6 +12,8 @@ import com.example.panikbutton.data.Contact
 import com.example.panikbutton.ui.profile.addContact.CONTACT_EMAIL
 import com.example.panikbutton.ui.profile.addContact.CONTACT_NAME
 import com.example.panikbutton.ui.profile.addContact.CONTACT_PHONE
+import com.example.panikbutton.ui.profile.contacts.ContactsListViewModelFactory
+import com.example.panikbutton.ui.profile.contacts.ContactsViewModel
 import com.example.panikbutton.ui.profile.mainProfile.CONTACT_ID
 import com.google.android.material.textfield.TextInputEditText
 
@@ -41,6 +43,9 @@ class EditContactActivity : AppCompatActivity() {
         editContactName = findViewById(R.id.edit_contact_name)
         editContactPhone = findViewById(R.id.edit_contact_phone)
         editContactEmail = findViewById(R.id.edit_contact_email)
+        findViewById<Button>(R.id.save_contact_profile).setOnClickListener {
+            addContact()
+        }
 
         /* If currentContactId is not null, get corresponding contact details */
         currentContactId?.let {
@@ -57,20 +62,17 @@ class EditContactActivity : AppCompatActivity() {
             }
         }
 
-        findViewById<Button>(R.id.save_contact_profile).setOnClickListener {
-            editContact()
-        }
 
     }
 
     /* The onClick action for the done button. Closes the activity and returns the new contact name
     and description as part of the intent. If the name or description are missing, the result is set
     to cancelled. */
-    private fun editContact() {
+    private fun addContact() {
         val resultIntent = Intent()
-
         if (editContactName.text.isNullOrEmpty() || editContactPhone.text.isNullOrEmpty()) {
             setResult(Activity.RESULT_CANCELED, resultIntent)
+            Log.e("Added", "from addContact - cancelled")
         } else {
             val name = editContactName.text.toString()
             val phone = editContactPhone.text.toString()
@@ -79,6 +81,8 @@ class EditContactActivity : AppCompatActivity() {
             resultIntent.putExtra(CONTACT_PHONE, phone)
             resultIntent.putExtra(CONTACT_EMAIL, email)
             setResult(Activity.RESULT_OK, resultIntent)
+            Log.e("Added", "from addContact - new added!")
+
         }
         finish()
     }

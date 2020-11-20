@@ -17,9 +17,6 @@ class ContactDetailViewModel(private val dataSource: DataSource) : ViewModel() {
         dataSource.removeContact(contact)
     }
 
-//    fun editContact(contact: Contact) {
-//
-//    }
 }
 
 class ContactDetailViewModelFactory(private val context: Context) : ViewModelProvider.Factory {
