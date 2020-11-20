@@ -48,14 +48,14 @@ class ContactsAdapter(private val onClick: (Contact) -> Unit) :
             currentContact = contact
 
             contactNameTextView.text = contact.contactName
+            // Checking for Android versions > Lollipop for phone number formatting
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
                 contactPhoneTextView.text = formatNumber(
                     contact.contactPhone.toString(),
                     Locale.getDefault().country
                 )
-                Log.e("number", contactPhoneTextView.text.toString())
-                Log.e("country", Locale.getDefault().country.toString())
-
+//                Log.e("number", contactPhoneTextView.text.toString())
+//                Log.e("country", Locale.getDefault().country.toString())
             }
             contactEmailTextView.text = contact.contactEmail
             // EXTRA: For if we want to set avatar images later

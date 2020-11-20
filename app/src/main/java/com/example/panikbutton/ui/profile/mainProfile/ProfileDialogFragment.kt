@@ -59,10 +59,9 @@ class ProfileDialogFragment : DialogFragment() {
                         sharedPref.edit().putString(getString(R.string.current_phone_name), inputtedPhone).apply()
                         sharedPref.edit().putString(getString(R.string.current_email_name), inputtedEmail).apply()
                     }
-
                 }
-                .setNegativeButton("") { dialog, id ->
-//                    getDialog()?.cancel()
+                .setNegativeButton(R.string.later) { dialog, id ->
+                    // No option to cancel
                 }
                 .setCancelable(false)
             builder.create()

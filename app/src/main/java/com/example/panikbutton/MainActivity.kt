@@ -69,6 +69,7 @@ class MainActivity : AppCompatActivity(), ProfileDialogFragment.ProfileDialogLis
     /* Function to show the profile dialog */
     private fun showProfileDialog() {
         val dialog = ProfileDialogFragment()
+        dialog.isCancelable = false
         dialog.show(supportFragmentManager, "ProfileDialogFragment")
     }
 
