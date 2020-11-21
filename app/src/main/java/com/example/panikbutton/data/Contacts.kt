@@ -1,9 +1,7 @@
 package com.example.panikbutton.data
 
-import android.content.res.Resources
-
 /* Returns initial list of contacts. */
-fun contactList(resources: Resources): List<Contact> {
+fun contactList(): List<Contact> {
     return listOf(
         Contact(
             id = 1,

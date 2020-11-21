@@ -24,8 +24,8 @@ class ProfileFragment : Fragment() {
         val sharedPref = activity?.getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE)
 
         val defaultUserNameValue = resources.getString(R.string.user_name)
-        val defaultUserPhoneValue = resources.getString(R.string.user_name)
-        val defaultUserEmailValue = resources.getString(R.string.user_name)
+        val defaultUserPhoneValue = resources.getString(R.string.user_phone)
+        val defaultUserEmailValue = resources.getString(R.string.user_email)
         val currentUserName = sharedPref?.getString(getString(R.string.current_user_name), defaultUserNameValue)
         val currentPhoneName = sharedPref?.getString(getString(R.string.current_phone_name), defaultUserPhoneValue)
         val currentEmailName = sharedPref?.getString(getString(R.string.current_email_name), defaultUserEmailValue)

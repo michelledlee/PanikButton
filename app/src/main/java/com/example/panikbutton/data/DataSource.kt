@@ -6,7 +6,7 @@ import androidx.lifecycle.MutableLiveData
 
 class DataSource(resources: Resources) {
 
-    private val initialContactList = contactList(resources)
+    private val initialContactList = contactList()
     private val contactsLiveData = MutableLiveData(initialContactList)
 
     /* Adds contact to liveData and posts value. */
@@ -30,18 +30,6 @@ class DataSource(resources: Resources) {
             contactsLiveData.postValue(updatedList)
         }
     }
-
-//    /* Edits contact from liveData and posts value. */
-//    fun editContact(contact: Contact) {
-//        val currentList = contactsLiveData.value
-//        if (currentList != null) {
-//            val updatedList = currentList.toMutableList()
-////            updatedList.
-//            // remove old contact
-//            // add new contact
-//            contactsLiveData.postValue(updatedList)
-//        }
-//    }
 
     /* Returns contact given an ID. */
     fun getContactForId(id: Long): Contact? {
