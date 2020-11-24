@@ -1,5 +1,8 @@
 package com.example.panikbutton.data
 
+import androidx.room.Room
+import androidx.room.Room.databaseBuilder
+
 /* Returns initial list of contacts. */
 fun contactList(): List<Contact> {
     return listOf(

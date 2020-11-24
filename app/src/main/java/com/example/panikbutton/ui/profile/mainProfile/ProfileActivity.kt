@@ -8,11 +8,15 @@ import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.panikbutton.R
 import com.example.panikbutton.data.Contact
+import com.example.panikbutton.data.ContactDatabase
+import com.example.panikbutton.database.ContactViewModel
+import com.example.panikbutton.database.ContactViewModelFactory
 import com.example.panikbutton.ui.profile.addContact.AddContactActivity
 import com.example.panikbutton.ui.profile.addContact.CONTACT_EMAIL
 import com.example.panikbutton.ui.profile.addContact.CONTACT_NAME
@@ -35,6 +39,11 @@ class ProfileActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile)
+
+        // Database access
+        val dataSource = ContactDatabase.getInstance(application).contactDatabaseDao
+        val viewModelFactory = ContactViewModelFactory(dataSource, application)
+        val contactViewModel = ViewModelProvider(this, viewModelFactory).get(ContactViewModel::class.java)
 
         /* Instantiates headerAdapter and contactsAdapter. Both adapters are added to concatAdapter.
         which displays the contents sequentially */
