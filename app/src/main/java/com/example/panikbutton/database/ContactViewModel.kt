@@ -5,15 +5,12 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.example.panikbutton.data.Contact
-import com.example.panikbutton.data.ContactDao
-import com.example.panikbutton.data.ContactEntity
 import kotlinx.coroutines.launch
 
 class ContactViewModel(private val database: ContactDao,
                        application: Application) : AndroidViewModel(application) {
 
-    private var contacts = MutableLiveData<LiveData<List<ContactEntity>>>()
+    var contacts = MutableLiveData<LiveData<List<ContactEntity>>>()
 
     init {
         initializeContacts()
@@ -25,7 +22,7 @@ class ContactViewModel(private val database: ContactDao,
         }
     }
 
-    private suspend fun getContactsFromDatabase() : LiveData<List<ContactEntity>> {
+    fun getContactsFromDatabase() : LiveData<List<ContactEntity>> {
         return database.getAll()
     }
 

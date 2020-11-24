@@ -1,4 +1,4 @@
-package com.example.panikbutton.data
+package com.example.panikbutton.database
 
 import androidx.lifecycle.LiveData
 import androidx.room.Dao

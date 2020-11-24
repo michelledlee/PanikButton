@@ -3,8 +3,6 @@ package com.example.panikbutton.database
 import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.panikbutton.data.ContactDao
-import com.example.panikbutton.data.ContactDatabase
 import java.lang.IllegalArgumentException
 
 class ContactViewModelFactory(

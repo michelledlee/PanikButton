@@ -8,6 +8,7 @@
     android:layout_height="match_parent"
     android:paddingTop="?attr/actionBarSize">
 
+
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/profile_fragment"
         android:name="com.example.panikbutton.ui.profile.mainProfile.ProfileFragment"
@@ -51,6 +52,14 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/contacts_recyclerView"
         tools:layout_editor_absoluteX="8dp" />
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/test_recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="visible"
+        app:layout_constraintTop_toBottomOf="@+id/add_contact"></androidx.recyclerview.widget.RecyclerView>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/profile_nav_view"

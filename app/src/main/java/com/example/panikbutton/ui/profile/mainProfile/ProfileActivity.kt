@@ -4,19 +4,14 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.*
 import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.panikbutton.R
-import com.example.panikbutton.data.Contact
-import com.example.panikbutton.data.ContactDatabase
-import com.example.panikbutton.database.ContactViewModel
-import com.example.panikbutton.database.ContactViewModelFactory
+import com.example.panikbutton.database.*
 import com.example.panikbutton.ui.profile.addContact.AddContactActivity
 import com.example.panikbutton.ui.profile.addContact.CONTACT_EMAIL
 import com.example.panikbutton.ui.profile.addContact.CONTACT_NAME
@@ -30,9 +25,14 @@ const val CONTACT_ID = "contact id"
 class ProfileActivity : AppCompatActivity() {
 
     private val newContactActivityRequestCode = 1
-    private val contactsListViewModel by viewModels<ContactsViewModel> {
-        ContactsListViewModelFactory(this)
-    }
+//    private val contactsListViewModel by viewModels<ContactsViewModel> {
+//        ContactsListViewModelFactory(this)
+//    }
+    // Database access
+    private lateinit var dataSource : ContactDao
+    private lateinit var viewModelFactory : ContactViewModelFactory
+    private lateinit var contactViewModel : ContactViewModel
+
 
     private lateinit var bottomNav: View
 
@@ -40,10 +40,9 @@ class ProfileActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile)
 
-        // Database access
-        val dataSource = ContactDatabase.getInstance(application).contactDatabaseDao
-        val viewModelFactory = ContactViewModelFactory(dataSource, application)
-        val contactViewModel = ViewModelProvider(this, viewModelFactory).get(ContactViewModel::class.java)
+        dataSource = ContactDatabase.getInstance(this).contactDatabaseDao
+        viewModelFactory = ContactViewModelFactory(dataSource, application)
+        contactViewModel = ViewModelProvider(this, viewModelFactory).get(ContactViewModel::class.java)
 
         /* Instantiates headerAdapter and contactsAdapter. Both adapters are added to concatAdapter.
         which displays the contents sequentially */
@@ -55,10 +54,21 @@ class ProfileActivity : AppCompatActivity() {
         recyclerView.adapter = concatAdapter
         recyclerView.layoutManager = LinearLayoutManager(this)
 
-        contactsListViewModel.contactLiveData.observe(this, {
+//        contactsListViewModel.contactLiveData.observe(this, {
+//            it?.let {
+//                contactsAdapter.submitList(it as MutableList<Contact>)
+//                headerAdapter.updateContactCount(it.size)
+//            }
+//        })
+
+        var mutableContactList : MutableList<ContactEntity> = arrayListOf()
+        contactViewModel.getContactsFromDatabase().value?.forEach {
+            mutableContactList.add(it)
+        }
+        contactViewModel.contacts.observe(this, {
             it?.let {
-                contactsAdapter.submitList(it as MutableList<Contact>)
-                headerAdapter.updateContactCount(it.size)
+                contactsAdapter.submitList(mutableContactList)
+                headerAdapter.updateContactCount(mutableContactList.size)
             }
         })
 
@@ -78,7 +88,8 @@ class ProfileActivity : AppCompatActivity() {
     }
 
     /* Opens EditDetailActivity when RecyclerView item is clicked. */
-    private fun adapterOnClick(contact: Contact) {
+//    private fun adapterOnClick(contact: Contact) {
+    private fun adapterOnClick(contact: ContactEntity) {
         val intent = Intent(this, EditContactActivity()::class.java)
         intent.putExtra(CONTACT_ID, contact.id)
         startActivityForResult(intent, newContactActivityRequestCode)
@@ -90,6 +101,19 @@ class ProfileActivity : AppCompatActivity() {
         startActivityForResult(intent, newContactActivityRequestCode)
     }
 
+//    override fun onActivityResult(requestCode: Int, resultCode: Int, intentData: Intent?) {
+//        super.onActivityResult(requestCode, resultCode, intentData)
+//        // Inserts contact into viewModel.
+//        if (requestCode == newContactActivityRequestCode && resultCode == Activity.RESULT_OK) {
+//            intentData?.let { data ->
+//                val contactName = data.getStringExtra(CONTACT_NAME)
+//                val contactPhone = data.getLongExtra(CONTACT_PHONE, -1)
+//                val contactEmail = data.getStringExtra(CONTACT_EMAIL)
+//                contactsListViewModel.insertContact(contactName, contactPhone, contactEmail)
+//            }
+//        }
+//    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, intentData: Intent?) {
         super.onActivityResult(requestCode, resultCode, intentData)
         // Inserts contact into viewModel.
@@ -98,7 +122,10 @@ class ProfileActivity : AppCompatActivity() {
                 val contactName = data.getStringExtra(CONTACT_NAME)
                 val contactPhone = data.getLongExtra(CONTACT_PHONE, -1)
                 val contactEmail = data.getStringExtra(CONTACT_EMAIL)
-                contactsListViewModel.insertContact(contactName, contactPhone, contactEmail)
+//                viewModelFactory.insertContact(contactName, contactPhone, contactEmail)
+                if (contactName != null && contactEmail != null) {
+                    contactViewModel.insertContact(contactName, contactPhone, contactEmail)
+                }
             }
         }
     }

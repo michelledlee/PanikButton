@@ -1,39 +1,35 @@
 package com.example.panikbutton.ui.profile.contacts
 
-import android.R.attr.key
-import android.app.Activity
-import android.content.Context
-import android.content.Intent
-import android.os.Bundle
 import android.telephony.PhoneNumberUtils.formatNumber
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.core.content.ContextCompat.getSystemService
-import androidx.core.os.ConfigurationCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.panikbutton.R
 import com.example.panikbutton.data.Contact
-import com.example.panikbutton.ui.profile.contactDetail.EditContactActivity
-import com.example.panikbutton.ui.profile.mainProfile.CONTACT_ID
+import com.example.panikbutton.database.ContactEntity
 import java.util.*
 
 
-class ContactsAdapter(private val onClick: (Contact) -> Unit) :
-    ListAdapter<Contact, ContactsAdapter.ContactViewHolder>(ContactDiffCallback) {
+//class ContactsAdapter(private val onClick: (Contact) -> Unit) :
+//    ListAdapter<Contact, ContactsAdapter.ContactViewHolder>(ContactDiffCallback) {
+
+class ContactsAdapter(private val onClick: (ContactEntity) -> Unit) :
+    ListAdapter<ContactEntity, ContactsAdapter.ContactViewHolder>(ContactDiffCallback) {
 
     /* ViewHolder for Contact, takes in the inflated view and the onClick behavior. */
-    class ContactViewHolder(itemView: View, val onClick: (Contact) -> Unit) :
-        RecyclerView.ViewHolder(itemView) {
+//    class ContactViewHolder(itemView: View, val onClick: (Contact) -> Unit) :
+    class ContactViewHolder(itemView: View, val onClick: (ContactEntity) -> Unit) :
+    RecyclerView.ViewHolder(itemView) {
         private val contactNameTextView: TextView = itemView.findViewById(R.id.contact_name)
 //        private val contactImageView: ImageView = itemView.findViewById(R.id.contact_image)
         private val contactPhoneTextView: TextView = itemView.findViewById(R.id.contact_phone)
         private val contactEmailTextView: TextView = itemView.findViewById(R.id.contact_email)
-        private var currentContact: Contact? = null
+//        private var currentContact: Contact? = null
+        private var currentContact: ContactEntity? = null
 
         init {
             itemView.setOnClickListener {
@@ -44,7 +40,8 @@ class ContactsAdapter(private val onClick: (Contact) -> Unit) :
         }
 
         /* Bind contact info. */
-        fun bind(contact: Contact) {
+//        fun bind(contact: Contact) {
+        fun bind(contact: ContactEntity) {
             currentContact = contact
 
             contactNameTextView.text = contact.contactName
@@ -78,17 +75,21 @@ class ContactsAdapter(private val onClick: (Contact) -> Unit) :
         holder.bind(contact)
     }
 
-    fun getContact(holder: ContactViewHolder, position:Int): Contact {
+//    fun getContact(holder: ContactViewHolder, position:Int): Contact {
+    fun getContact(holder: ContactViewHolder, position:Int): ContactEntity {
         return getItem(position)
     }
 }
 
-object ContactDiffCallback : DiffUtil.ItemCallback<Contact>() {
-    override fun areItemsTheSame(oldItem: Contact, newItem: Contact): Boolean {
+//object ContactDiffCallback : DiffUtil.ItemCallback<Contact>() {
+object ContactDiffCallback : DiffUtil.ItemCallback<ContactEntity>() {
+//    override fun areItemsTheSame(oldItem: Contact, newItem: Contact): Boolean {
+    override fun areItemsTheSame(oldItem: ContactEntity, newItem: ContactEntity): Boolean {
         return oldItem == newItem
     }
 
-    override fun areContentsTheSame(oldItem: Contact, newItem: Contact): Boolean {
+//    override fun areContentsTheSame(oldItem: Contact, newItem: Contact): Boolean {
+override fun areContentsTheSame(oldItem: ContactEntity, newItem: ContactEntity): Boolean {
         return oldItem.id == newItem.id
     }
 }
