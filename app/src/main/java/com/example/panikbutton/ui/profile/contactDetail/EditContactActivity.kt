@@ -9,27 +9,30 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.example.panikbutton.R
 import com.example.panikbutton.data.Contact
+import com.example.panikbutton.database.*
 import com.example.panikbutton.ui.profile.addContact.CONTACT_EMAIL
 import com.example.panikbutton.ui.profile.addContact.CONTACT_NAME
 import com.example.panikbutton.ui.profile.addContact.CONTACT_PHONE
-import com.example.panikbutton.ui.profile.contacts.ContactsListViewModelFactory
-import com.example.panikbutton.ui.profile.contacts.ContactsViewModel
 import com.example.panikbutton.ui.profile.mainProfile.CONTACT_ID
 import com.google.android.material.textfield.TextInputEditText
 
 /* Opened from the ContactsAdapter.kt class when a user clicks on a RecyclerView item*/
 class EditContactActivity : AppCompatActivity() {
+    private lateinit var dataSource : ContactDao
     private lateinit var editContactName: TextInputEditText
     private lateinit var editContactPhone: TextInputEditText
     private lateinit var editContactEmail: TextInputEditText
 
-    private val contactDetailViewModel by viewModels<ContactDetailViewModel> {
-        ContactDetailViewModelFactory(this)
+    private val contactViewModel by viewModels<ContactViewModel> {
+        ContactViewModelFactory(dataSource, application)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.edit_contact_layout)
+
+        // Database access
+        dataSource = ContactDatabase.getInstance(this).contactDatabaseDao
 
         var currentContactId: Long? = null
 
@@ -49,7 +52,7 @@ class EditContactActivity : AppCompatActivity() {
 
         /* If currentContactId is not null, get corresponding contact details */
         currentContactId?.let {
-            val currentContact = contactDetailViewModel.getContactForId(it)
+            val currentContact = contactViewModel.getContactForId(it)
 
             editContactName.setText(currentContact?.contactName)
             editContactPhone.setText(currentContact?.contactPhone.toString())
@@ -87,8 +90,8 @@ class EditContactActivity : AppCompatActivity() {
         finish()
     }
 
-    private fun deleteContact(currentContact : Contact) {
-        contactDetailViewModel.removeContact(currentContact)
+    private fun deleteContact(currentContact : ContactEntity) {
+        contactViewModel.deleteContact(currentContact)
         finish()
     }
 }

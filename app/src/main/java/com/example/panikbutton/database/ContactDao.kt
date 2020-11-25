@@ -5,11 +5,15 @@ import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
+import com.example.panikbutton.data.Contact
 
 @Dao
 interface ContactDao {
     @Query("SELECT * FROM contact")
     fun getAll(): LiveData<List<ContactEntity>>
+
+    @Query("SELECT * FROM contact WHERE id=:id")
+    fun getContactForId(id: Long): ContactEntity
 
     @Query("SELECT COUNT(*) FROM contact")
     suspend fun getSize(): Integer

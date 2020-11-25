@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.*
@@ -61,14 +62,11 @@ class ProfileActivity : AppCompatActivity() {
 //            }
 //        })
 
-        var mutableContactList : MutableList<ContactEntity> = arrayListOf()
-        contactViewModel.getContactsFromDatabase().value?.forEach {
-            mutableContactList.add(it)
-        }
         contactViewModel.contacts.observe(this, {
             it?.let {
-                contactsAdapter.submitList(mutableContactList)
-                headerAdapter.updateContactCount(mutableContactList.size)
+                contactsAdapter.submitList(it as MutableList<ContactEntity>)
+                headerAdapter.updateContactCount(it.size)
+//                Log.e("num contacts:", it.size.toString())
             }
         })
 
@@ -125,6 +123,7 @@ class ProfileActivity : AppCompatActivity() {
 //                viewModelFactory.insertContact(contactName, contactPhone, contactEmail)
                 if (contactName != null && contactEmail != null) {
                     contactViewModel.insertContact(contactName, contactPhone, contactEmail)
+                    Log.e("New contact", "added from onActivityResult")
                 }
             }
         }
