@@ -1,4 +1,4 @@
-package com.example.panikbutton.ui.profile.mainProfile//package com.example.panikbutton.ui.todelete
+package com.example.panikbutton.ui.profile.user//package com.example.panikbutton.ui.todelete
 
 import android.content.Context
 import android.content.Intent
@@ -8,8 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.panikbutton.R
-import com.example.panikbutton.ui.profile.contactDetail.EditContactActivity
-import kotlinx.android.synthetic.main.fragment_profile.*
 import kotlinx.android.synthetic.main.fragment_profile.view.*
 
 class ProfileFragment : Fragment() {

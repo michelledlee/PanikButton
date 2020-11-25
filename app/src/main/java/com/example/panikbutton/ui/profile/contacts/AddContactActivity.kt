@@ -1,4 +1,4 @@
-package com.example.panikbutton.ui.profile.addContact
+package com.example.panikbutton.ui.profile.contacts
 
 import android.app.Activity
 import android.content.Intent

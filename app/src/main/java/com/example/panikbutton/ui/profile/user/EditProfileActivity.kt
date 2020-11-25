@@ -1,12 +1,12 @@
-package com.example.panikbutton.ui.profile.mainProfile
+package com.example.panikbutton.ui.profile.user
 
 import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import com.example.panikbutton.R
+import com.example.panikbutton.ui.profile.ProfileActivity
 import com.google.android.material.textfield.TextInputEditText
 
 class EditProfileActivity : AppCompatActivity() {

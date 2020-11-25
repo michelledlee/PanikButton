@@ -2,10 +2,8 @@ package com.example.panikbutton
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import androidx.navigation.findNavController
@@ -13,9 +11,10 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.panikbutton.ui.about.AboutActivity
-import com.example.panikbutton.ui.profile.mainProfile.ProfileActivity
-import com.example.panikbutton.ui.profile.mainProfile.ProfileDialogFragment
+import com.example.panikbutton.ui.profile.user.ProfileActivity
+import com.example.panikbutton.ui.profile.user.ProfileDialogFragment
 import com.example.panikbutton.ui.settings.SettingsActivity
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity(), ProfileDialogFragment.ProfileDialogListener {
 

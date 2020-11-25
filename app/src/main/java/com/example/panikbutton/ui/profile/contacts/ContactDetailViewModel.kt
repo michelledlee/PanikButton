@@ -1,4 +1,4 @@
-package com.example.panikbutton.ui.profile.contactDetail
+package com.example.panikbutton.ui.profile.contacts
 
 import android.content.Context
 import androidx.lifecycle.ViewModel

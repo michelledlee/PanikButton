@@ -1,9 +1,8 @@
-package com.example.panikbutton.ui.profile.mainProfile
+package com.example.panikbutton.ui.profile.user
 
 import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Context
-import android.content.DialogInterface
 import android.os.Bundle
 import androidx.fragment.app.DialogFragment
 import com.example.panikbutton.R
@@ -36,7 +35,7 @@ class ProfileDialogFragment : DialogFragment() {
         return activity?.let {
             val builder = AlertDialog.Builder(it)
             // Get the layout inflater
-            val inflater = requireActivity().layoutInflater;
+            val inflater = requireActivity().layoutInflater
 
             val view = inflater.inflate(R.layout.profile_input_window, null)
             // Inflate and set the layout for the dialog
