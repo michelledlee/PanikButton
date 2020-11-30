@@ -48,4 +48,5 @@
     <string name="welcome">Welcome!</string>
     <string name="intro">Please enter your user profile details which will be used in your emergency messages.</string>
     <string name="later">Later</string>
+    <string name="contactsURI"></string>
 </resources>

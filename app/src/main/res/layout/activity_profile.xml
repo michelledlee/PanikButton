@@ -11,7 +11,7 @@
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/profile_fragment"
-        android:name="com.example.panikbutton.ui.profile.mainProfile.ProfileFragment"
+        android:name="com.example.panikbutton.ui.profile.user.ProfileFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toTopOf="@id/contacts_title"

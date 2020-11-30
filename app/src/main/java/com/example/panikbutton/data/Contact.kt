@@ -1,6 +1,10 @@
 package com.example.panikbutton.data
 
-data class Contact (
+import kotlinx.serialization.Serializable
+
+@Serializable
+class Contact(
+//data class Contact (
     val id: Long,
     val contactName: String,
     val contactPhone: Long,

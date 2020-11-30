@@ -3,12 +3,14 @@ package com.example.panikbutton.ui.profile.user//package com.example.panikbutton
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.telephony.PhoneNumberUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.panikbutton.R
 import kotlinx.android.synthetic.main.fragment_profile.view.*
+import java.util.*
 
 class ProfileFragment : Fragment() {
 
@@ -25,12 +27,20 @@ class ProfileFragment : Fragment() {
         val defaultUserPhoneValue = resources.getString(R.string.user_phone)
         val defaultUserEmailValue = resources.getString(R.string.user_email)
         val currentUserName = sharedPref?.getString(getString(R.string.current_user_name), defaultUserNameValue)
-        val currentPhoneName = sharedPref?.getString(getString(R.string.current_phone_name), defaultUserPhoneValue)
-        val currentEmailName = sharedPref?.getString(getString(R.string.current_email_name), defaultUserEmailValue)
+        val currentPhone = sharedPref?.getString(getString(R.string.current_phone_name), defaultUserPhoneValue)
+        val currentEmail = sharedPref?.getString(getString(R.string.current_email_name), defaultUserEmailValue)
 
         view.profile_userName.text = currentUserName
-        view.profile_userPhone.text = currentPhoneName
-        view.profile_userEmail.text = currentEmailName
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+            view.profile_userPhone.text = PhoneNumberUtils.formatNumber(
+                currentPhone.toString(),
+                Locale.getDefault().country
+            )
+        } else {
+            view.profile_userPhone.text = currentPhone
+        }
+
+        view.profile_userEmail.text = currentEmail
 
         view.profile_editButton.setOnClickListener {
             val intent = Intent (activity, EditProfileActivity::class.java)

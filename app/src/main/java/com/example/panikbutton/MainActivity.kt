@@ -2,6 +2,7 @@ package com.example.panikbutton
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
@@ -11,10 +12,11 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.panikbutton.ui.about.AboutActivity
-import com.example.panikbutton.ui.profile.user.ProfileActivity
+import com.example.panikbutton.ui.profile.ProfileActivity
 import com.example.panikbutton.ui.profile.user.ProfileDialogFragment
 import com.example.panikbutton.ui.settings.SettingsActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import java.io.File
 
 class MainActivity : AppCompatActivity(), ProfileDialogFragment.ProfileDialogListener {
 
@@ -63,6 +65,15 @@ class MainActivity : AppCompatActivity(), ProfileDialogFragment.ProfileDialogLis
         if (initialStart == "true") {
             showProfileDialog()
         }
+
+        // Setting up contacts directory
+        val path = filesDir
+        val contactsDirectory = File(path, "CONTACTS")
+        contactsDirectory.mkdirs()
+        val file = File(contactsDirectory, "Contacts.txt")
+        val fileURI = file.toURI()
+        sharedPref.edit().putString(getString(R.string.contactsURI), fileURI.toString()).apply()
+        Log.e("Contacts file created", fileURI.toString())
     }
 
     /* Function to show the profile dialog */

@@ -14,7 +14,6 @@ import com.google.android.material.textfield.TextInputEditText
 
 /* Opened from the ContactsAdapter.kt class when a user clicks on a RecyclerView item*/
 class EditContactActivity : AppCompatActivity() {
-//    private lateinit var dataSource : ContactDao
     private lateinit var editContactName: TextInputEditText
     private lateinit var editContactPhone: TextInputEditText
     private lateinit var editContactEmail: TextInputEditText
@@ -26,9 +25,6 @@ class EditContactActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.edit_contact_layout)
-
-        // Database access
-//        dataSource = ContactDatabase.getInstance(this).contactDatabaseDao
 
         var currentContactId: Long? = null
 

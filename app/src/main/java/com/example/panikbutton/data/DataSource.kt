@@ -4,9 +4,6 @@ import android.content.res.Resources
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import androidx.room.Room
-import kotlinx.coroutines.launch
 
 class DataSource(resources: Resources): ViewModel() {
 

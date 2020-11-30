@@ -23,7 +23,7 @@
             android:label="@string/title_about">
         </activity>
         <activity
-            android:name=".ui.profile.user.ProfileActivity"
+            android:name=".ui.profile.ProfileActivity"
             android:label="@string/title_profile">
         </activity>
         <activity
@@ -37,10 +37,6 @@
         <activity
             android:name=".ui.profile.contacts.EditContactActivity"
             android:label="@string/edit_contact">
-        </activity>
-        <activity
-            android:name=".ui.profile.contactDetail.ContactDetailActivity"
-            android:label="@string/contact_detail">
         </activity>
 
         <activity
