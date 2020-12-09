@@ -25,7 +25,7 @@ class ContactDetailViewModelFactory(private val context: Context) : ViewModelPro
         if (modelClass.isAssignableFrom(ContactDetailViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")
             return ContactDetailViewModel(
-                dataSource = DataSource.getDataSource(context.resources)
+                dataSource = DataSource.getDataSource()
             ) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")

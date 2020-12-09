@@ -2,7 +2,6 @@ package com.example.panikbutton
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
@@ -16,7 +15,6 @@ import com.example.panikbutton.ui.profile.ProfileActivity
 import com.example.panikbutton.ui.profile.user.ProfileDialogFragment
 import com.example.panikbutton.ui.settings.SettingsActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import java.io.File
 
 class MainActivity : AppCompatActivity(), ProfileDialogFragment.ProfileDialogListener {
 
@@ -59,21 +57,32 @@ class MainActivity : AppCompatActivity(), ProfileDialogFragment.ProfileDialogLis
     /* Opens a dialog for the user to enter their profile details */
     private fun checkInitialStart() {
         // Getting default user values from SharedPreferences
-        val sharedPref = this.getSharedPreferences(
+        val sharedPref = getSharedPreferences(
             getString(R.string.preference_file_key), Context.MODE_PRIVATE)
         val initialStart = sharedPref.getString(getString(R.string.entered_user_info), "true")
         if (initialStart == "true") {
             showProfileDialog()
         }
 
-        // Setting up contacts directory
-        val path = filesDir
-        val contactsDirectory = File(path, "CONTACTS")
-        contactsDirectory.mkdirs()
-        val file = File(contactsDirectory, "Contacts.txt")
-        val fileURI = file.toURI()
-        sharedPref.edit().putString(getString(R.string.contactsURI), fileURI.toString()).apply()
-        Log.e("Contacts file created", fileURI.toString())
+//        // Setting up contacts directory
+//        val path = filesDir
+//        val contactsDirectory = File(path, "CONTACTS")
+//        contactsDirectory.mkdirs()
+//        val file = File(contactsDirectory, "Contacts.txt")
+//        Log.e("file:", file.toString())
+//        // Write test contact to file
+//        FileWriter(file).append("[1,\"Contact1\",9055097899,\"Contact1@email.com\"]")
+////        file.printWriter().use { out
+////            Log.e("writing to file", "line1")
+////            println("[1,\"Contact1\",9055097899,\"Contact1@email.com\"]")
+////        }
+//
+//        // Create dummy contact and add to file
+////        Json.encodeToString(Contact(nextLong(), "TestName", 4163101010, "test@test.com"))
+//        // Save the file path to be accessed later
+//        val fileURI = file.toURI()
+//        sharedPref.edit().putString(getString(R.string.contactsURI), fileURI.toString()).apply()
+//        Log.e("Contacts file created", fileURI.toString())
     }
 
     /* Function to show the profile dialog */
