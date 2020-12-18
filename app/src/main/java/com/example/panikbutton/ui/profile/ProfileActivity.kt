@@ -58,20 +58,6 @@ class ProfileActivity : AppCompatActivity() {
         addContactButton.setOnClickListener {
             addContactOnClick()
         }
-
-
-
-//        // gson testing - CANNOT ACCESS FILE
-//        val uri = Uri.parse("android.resource://com.example.panikbutton/res/raw/contacts.json")
-//        val file = File(uri.path!!);
-//        Log.e("contents:", file.toString())
-//
-//        val gson = Gson()
-//        val arrayContactType = object : TypeToken<Array<Contact>>() {}.type
-//
-//        val contacts: Array<Contact> = gson.fromJson(FileReader(file), arrayContactType)
-//
-//        Log.e("contacts list:", contacts.toString())
     }
 
     /* Opens EditDetailActivity when RecyclerView item is clicked. */

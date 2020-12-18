@@ -14,10 +14,10 @@ android {
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
-
     buildTypes {
         release {
             minifyEnabled false
@@ -31,7 +31,9 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
-
+    buildFeatures {
+        dataBinding true
+    }
 }
 
 
@@ -65,4 +67,6 @@ dependencies {
     // Serializable
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.0.1")
 
+    // Multidex
+    implementation 'com.android.support:multidex:1.0.3'
 }

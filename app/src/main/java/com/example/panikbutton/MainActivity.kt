@@ -15,8 +15,11 @@ import com.example.panikbutton.ui.profile.ProfileActivity
 import com.example.panikbutton.ui.profile.user.ProfileDialogFragment
 import com.example.panikbutton.ui.settings.SettingsActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.auth.FirebaseAuth
 
 class MainActivity : AppCompatActivity(), ProfileDialogFragment.ProfileDialogListener {
+
+    private lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,6 +35,13 @@ class MainActivity : AppCompatActivity(), ProfileDialogFragment.ProfileDialogLis
         navView.setupWithNavController(navController)
 
         checkInitialStart()
+    }
+
+    public override fun onStart() {
+        super.onStart()
+
+        val currentUSer = auth.currentUser
+//        updateUI(currentUser)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -63,26 +73,6 @@ class MainActivity : AppCompatActivity(), ProfileDialogFragment.ProfileDialogLis
         if (initialStart == "true") {
             showProfileDialog()
         }
-
-//        // Setting up contacts directory
-//        val path = filesDir
-//        val contactsDirectory = File(path, "CONTACTS")
-//        contactsDirectory.mkdirs()
-//        val file = File(contactsDirectory, "Contacts.txt")
-//        Log.e("file:", file.toString())
-//        // Write test contact to file
-//        FileWriter(file).append("[1,\"Contact1\",9055097899,\"Contact1@email.com\"]")
-////        file.printWriter().use { out
-////            Log.e("writing to file", "line1")
-////            println("[1,\"Contact1\",9055097899,\"Contact1@email.com\"]")
-////        }
-//
-//        // Create dummy contact and add to file
-////        Json.encodeToString(Contact(nextLong(), "TestName", 4163101010, "test@test.com"))
-//        // Save the file path to be accessed later
-//        val fileURI = file.toURI()
-//        sharedPref.edit().putString(getString(R.string.contactsURI), fileURI.toString()).apply()
-//        Log.e("Contacts file created", fileURI.toString())
     }
 
     /* Function to show the profile dialog */

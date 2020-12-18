@@ -49,4 +49,19 @@
     <string name="intro">Please enter your user profile details which will be used in your emergency messages.</string>
     <string name="later">Later</string>
     <string name="contactsURI"></string>
+    <string name="signed_out">signed out</string>
+    <string name="emailpassword_title_text">Sign In Page</string>
+    <string name="hint_password">Enter password</string>
+    <string name="sign_in">Sign In</string>
+    <string name="create_account">Create Account</string>
+    <string name="sign_out">Sign Out</string>
+    <string name="verify_email">Verify Email</string>
+    <string name="reload">Reload</string>
+    <string name="emailpassword_status_fmt">Email User: %1$s (verified: %2$b)</string>
+    <string name="firebase_status_fmt">Firebase UID: %s</string>
+    <string name="auth_failed">Authentication failed</string>
+    <string name="label_multi_factor">Multi-Factor Authentication</string>
+    <string name="enroll_mfa">Enroll MFA</string>
+    <string name="unenroll_mfa">Unenroll MFA</string>
+    <string name="multi_factor_signed_out">You are not signed in. To use this sample, first navigate to the Email/Password example to sign in and then return here to enroll in multi-factor auth.</string>
 </resources>
