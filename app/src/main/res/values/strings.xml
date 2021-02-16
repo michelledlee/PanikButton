@@ -42,7 +42,9 @@
     <string name="delete">Delete</string>
     <string name="edit_profile_title">Edit Profile</string>
     <string name="new_profile">New Profile</string>
-    <string name="default_text_message">%s %s is in need of emergency assistance. Please contact the local authorities for help as soon as possible.</string>
+    <string name="default_text_message">%s %s needs emergency assistance. Please contact the local authorities for help as soon as possible.</string>
+    <string name="default_email_subject">%s %s needs emergency assistance</string>
+    <string name="label_send_email">send email</string>
     <string name="entered_user_info">enteredUserInfo</string>
     <string name="okay">Okay</string>
     <string name="welcome">Welcome!</string>

@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import com.example.panikbutton.databinding.ActivityEmailpasswordBinding
+import com.example.panikbutton.ui.profile.ProfileActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthMultiFactorException
 import com.google.firebase.auth.FirebaseUser
@@ -183,6 +184,11 @@ class EmailPasswordActivity : BaseActivity(), View.OnClickListener {
             } else {
                 binding.verifyEmailButton.visibility = View.VISIBLE
             }
+
+            val intent = Intent(this, ProfileActivity::class.java)
+//            intent.putExtra("key", value)
+            startActivity(intent)
+
         } else {
             binding.status.setText(R.string.signed_out)
             binding.detail.text = null

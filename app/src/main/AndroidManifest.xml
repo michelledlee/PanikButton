@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.panikbutton">
 
+    <uses-permission android:name="android.permission.SEND_SMS"/>
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -38,7 +40,10 @@
             android:name=".ui.profile.contacts.EditContactActivity"
             android:label="@string/edit_contact">
         </activity>
-
+        <activity
+            android:name=".ui.home.HomeActivity"
+            android:label="@string/title_home">
+        </activity>
         <activity
             android:name=".ui.settings.SettingsActivity"
             android:label="@string/title_settings">

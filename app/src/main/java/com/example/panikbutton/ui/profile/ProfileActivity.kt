@@ -7,11 +7,16 @@ import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentManager
+import androidx.navigation.Navigation
+import androidx.navigation.Navigation.findNavController
 import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.panikbutton.R
 import com.example.panikbutton.data.Contact
+import com.example.panikbutton.ui.home.HomeActivity
+import com.example.panikbutton.ui.home.HomeFragment
 import com.example.panikbutton.ui.profile.contacts.*
 
 const val CONTACT_ID = "contact id"
@@ -46,12 +51,16 @@ class ProfileActivity : AppCompatActivity() {
             }
         })
 
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.setDisplayShowHomeEnabled(true)
+//        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+//        supportActionBar?.setDisplayShowHomeEnabled(true)
 
         bottomNav = findViewById(R.id.navigation_home)
         bottomNav.setOnClickListener {
-            onBackPressed()
+//            onBackPressed()
+//            val homeFragment = HomeFragment()
+//            supportFragmentManager.beginTransaction().add(R.id.home_fragment, homeFragment)
+            val intent = Intent(this, HomeActivity::class.java)
+            startActivity(intent)
         }
 
         val addContactButton: View = findViewById(R.id.add_contact)
@@ -86,10 +95,17 @@ class ProfileActivity : AppCompatActivity() {
         }
     }
 
-    override fun onSupportNavigateUp(): Boolean {
-        onBackPressed()
-        return super.onSupportNavigateUp()
-    }
+//    override fun onSupportNavigateUp(): Boolean {
+//        try {
+//            findNavController(bottomNav).getBackStackEntry(R.id.home_fragment)
+//        } catch (ignored: Throwable) {
+////            onBackPressed()
+//            val homeFragment = HomeFragment()
+//            supportFragmentManager.beginTransaction().add(R.id.home_fragment, homeFragment)
+//        }
+//        onBackPressed()
+//        return super.onSupportNavigateUp()
+//    }
 
     companion object {
         fun start(context: Context) {
