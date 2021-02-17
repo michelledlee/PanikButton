@@ -74,7 +74,7 @@ class EmailPasswordActivity : BaseActivity(), View.OnClickListener {
             }
     }
 
-    /** **/
+    /** Sign-in with email **/
     private fun signIn(email: String, password: String) {
         Log.d(TAG,"signIn:$email")
         if (!validateForm()) {
