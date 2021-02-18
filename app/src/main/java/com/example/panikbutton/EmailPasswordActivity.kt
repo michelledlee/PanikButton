@@ -1,5 +1,6 @@
 package com.example.panikbutton
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
@@ -62,6 +63,16 @@ class EmailPasswordActivity : BaseActivity(), View.OnClickListener {
                     Log.d(TAG, "createUserWithEmail:success")
                     val user = auth.currentUser
                     updateUI(user) // Update for current user
+
+                    // Add to shared preferences
+                    val sharedPref = this?.getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE)
+                    with (sharedPref.edit()) {
+                        putString(getString(R.string.current_user_name), email)
+                        apply()
+                    }
+
+                    // Add to database
+
                 } else {
                     // Sign in failure
                     Log.w(TAG, "createUserWithEmail:failure", task.exception)

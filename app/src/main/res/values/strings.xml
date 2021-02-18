@@ -16,11 +16,14 @@
     <string name="back_text">Back</string>
     <string name="preference_file_key">com.example.panikbutton_PREFERENCE_FILE_KEY</string>
     <string name="user_name">User name not provided.</string>
-    <string name="user_phone">User phone not provided.</string>
+    <string name="user_phone">__________</string>
     <string name="user_email">User email not provided.</string>
     <string name="current_user_name">currentUserName</string>
     <string name="current_phone_name">currentPhoneName</string>
     <string name="current_email_name">currentEmailName</string>
+    <string name="userName">userName</string>
+    <string name="phoneName">phoneName</string>
+    <string name="emailName">emailName</string>
     <string name="updated_name">Name: %s</string>
     <string name="updated_phone">Phone: %s</string>
     <string name="updated_email">Email: %s</string>
