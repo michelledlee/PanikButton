@@ -3,14 +3,19 @@ package com.example.panikbutton.ui.profile.contacts
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.text.TextUtils
 import android.util.Log
 import android.widget.Button
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.text.isDigitsOnly
 import com.example.panikbutton.R
 import com.example.panikbutton.data.Contact
 import com.example.panikbutton.ui.profile.CONTACT_ID
 import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
+import kotlinx.android.synthetic.main.add_contact_layout.*
+import kotlinx.android.synthetic.main.edit_profile_layout.*
 
 /* Opened from the ContactsAdapter.kt class when a user clicks on a RecyclerView item*/
 class EditContactActivity : AppCompatActivity() {
@@ -33,13 +38,14 @@ class EditContactActivity : AppCompatActivity() {
             currentContactId = bundle.getLong(CONTACT_ID)
         }
 
-        Log.e("currentContactId", CONTACT_ID)
-
         editContactName = findViewById(R.id.edit_contact_name)
         editContactPhone = findViewById(R.id.edit_contact_phone)
         editContactEmail = findViewById(R.id.edit_contact_email)
+
         findViewById<Button>(R.id.save_contact_profile).setOnClickListener {
-            addContact()
+            if (editContact()) {
+                finish()
+            }
         }
 
         /* If currentContactId is not null, get corresponding contact details */
@@ -53,6 +59,7 @@ class EditContactActivity : AppCompatActivity() {
             findViewById<Button>(R.id.delete_contact_button).setOnClickListener {
                 if (currentContact != null) {
                     deleteContact(currentContact)
+                    finish()
                 }
             }
         }
@@ -63,27 +70,68 @@ class EditContactActivity : AppCompatActivity() {
     /* The onClick action for the done button. Closes the activity and returns the new contact name
     and description as part of the intent. If the name or description are missing, the result is set
     to cancelled. */
-    private fun addContact() {
+    private fun editContact(): Boolean {
+
         val resultIntent = Intent()
         if (editContactName.text.isNullOrEmpty() || editContactPhone.text.isNullOrEmpty()) {
             setResult(Activity.RESULT_CANCELED, resultIntent)
         } else {
             val name = editContactName.text.toString()
-            val phone = editContactPhone.text.toString().toLong()
-            val email = editContactEmail.text.toString()
-            resultIntent.putExtra(CONTACT_NAME, name)
-            resultIntent.putExtra(CONTACT_PHONE, phone)
-            Log.e("phone", phone.toString())
+            val phone = editContactPhone.text.toString()
 
+        // Validation for phone number
+            if (!validatePhone(phone)) {
+                return false
+            }
+            val email = editContactEmail.text.toString()
+            // Validation for email
+            if (!email.isEmailValid()) {
+                return false
+            }
+
+            resultIntent.putExtra(CONTACT_NAME, name)
+            resultIntent.putExtra(CONTACT_PHONE, phone.toLong())
             resultIntent.putExtra(CONTACT_EMAIL, email)
             setResult(Activity.RESULT_OK, resultIntent)
-
         }
-        finish()
+
+        return true
+
+    }
+
+    /** Validate phone number so it can be formatted correctly in UI **/
+    private fun validatePhone(inputtedPhone: String): Boolean {
+        var valid = true
+
+        val textView : TextInputEditText = findViewById<TextInputEditText>(R.id.edit_contact_phone)
+
+        // Check if number is empty
+        if (inputtedPhone.isEmpty()) {
+            textView.error = "Required."
+            valid = false
+        }
+
+        // Check length of number
+        if (inputtedPhone.length != 10) {
+            textView.error = "Enter a valid phone number."
+            valid = false
+        }
+
+        // Check if all digits
+        if (!inputtedPhone.isDigitsOnly()) {
+            textView.error = "Enter valid phone (without () or -)."
+            valid = false
+        }
+
+        return valid
+    }
+
+    /** Validate email so it can be formatted correctly in UI **/
+    private fun String.isEmailValid(): Boolean {
+        return !TextUtils.isEmpty(this) && android.util.Patterns.EMAIL_ADDRESS.matcher(this).matches()
     }
 
     private fun deleteContact(currentContact : Contact) {
         contactDetailViewModel.removeContact(currentContact)
-        finish()
     }
 }

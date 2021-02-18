@@ -41,33 +41,40 @@ class EditProfileActivity : AppCompatActivity() {
 
         // Updating SharedPreferences with new user data
         findViewById<Button>(R.id.save_user_profile).setOnClickListener {
-            saveNewUserData()
-
-//            // Go back to the Profile activity
-//            val intent = Intent (this, ProfileActivity::class.java)
-//            startActivity(intent)
+            if (saveNewUserData()) {
+                // Go back to the Profile activity
+                val intent = Intent (this, ProfileActivity::class.java)
+                startActivity(intent)
+            }
         }
     }
 
     /** Save updated user data to Shared Preferences and Firebase **/
-    private fun saveNewUserData() {
+    private fun saveNewUserData(): Boolean {
         val inputtedPhone = findViewById<TextInputEditText>(R.id.edit_user_phone).text.toString()
         // Validation for phone number
         if (!validatePhone(inputtedPhone)) {
-            return
+            return false
         }
+
+        val inputtedEmail = findViewById<TextInputEditText>(R.id.edit_user_email).text.toString()
+        // Validation for email
+        if (!inputtedEmail.isEmailValid()) {
+            return false
+        }
+
+        val inputtedName = findViewById<TextInputEditText>(R.id.edit_user_name).text.toString()
 
         // Save the user details to SharedPreferences
         val sharedPref = this.getSharedPreferences(
             getString(R.string.preference_file_key), Context.MODE_PRIVATE)
 
-        val inputtedName = findViewById<TextInputEditText>(R.id.edit_user_name).text.toString()
-        val inputtedEmail = findViewById<TextInputEditText>(R.id.edit_user_email).text.toString()
-
         // Save all updates
         sharedPref.edit().putString(getString(R.string.current_user_name), inputtedName).apply()
         sharedPref.edit().putString(getString(R.string.current_phone_name), inputtedPhone).apply()
         sharedPref.edit().putString(getString(R.string.current_email_name), inputtedEmail).apply()
+
+        return true
     }
 
     /** Validate phone number so it can be formatted correctly in UI **/
@@ -94,6 +101,11 @@ class EditProfileActivity : AppCompatActivity() {
         }
 
         return valid
+    }
+
+    /** Validate email so it can be formatted correctly in UI **/
+    private fun String.isEmailValid(): Boolean {
+        return !TextUtils.isEmpty(this) && android.util.Patterns.EMAIL_ADDRESS.matcher(this).matches()
     }
 
 
