@@ -18,6 +18,7 @@
     <string name="user_name">User name not provided.</string>
     <string name="user_phone">__________</string>
     <string name="user_email">User email not provided.</string>
+    <string name="current_user_id">currentUserId</string>
     <string name="current_user_name">currentUserName</string>
     <string name="current_phone_name">currentPhoneName</string>
     <string name="current_email_name">currentEmailName</string>

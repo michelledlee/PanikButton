@@ -1,14 +1,16 @@
 package com.example.panikbutton.data
 
+import android.content.Context
+import com.example.panikbutton.R
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import kotlin.random.Random
 
-abstract class ReadAndWriteSnippets {
+interface ReadAndWriteSnippets {
+//abstract class ReadAndWriteSnippets {
 
-    private val TAG = "ReadAndWriteSnippets"
-
-    private lateinit var database: DatabaseReference
+    var database: DatabaseReference
 
     /** Initialize a database reference **/
     fun initializeDbRef() {
@@ -16,22 +18,27 @@ abstract class ReadAndWriteSnippets {
     }
 
     /** Add a new user to the database **/
-    fun writeNewUser(userName: String, userPhone: Long, userEmail: String) {
-        val user = User(userName, userPhone, userEmail)
+    fun writeNewUser(userId: Long, userName: String, userPhone: Long, userEmail: String) {
+        val user = User(userId, userName, userPhone, userEmail)
+        database.child("users").child(userId.toString()).setValue(user)
 
-        // Access userId from shared preferences
-        val userId = ""
-        database.child(userId).child(userName).setValue(user)
+    }
+
+    /** Edit existing contact**/
+    fun editUser(userId: Long, userName: String, userPhone: Long, userEmail: String) {
+        val user = User(userId, userName, userPhone, userEmail)
+        database.child("users").child(userId.toString()).setValue(user)
+
     }
 
     /** Add a new user to the database with success/failure listeners **/
     fun writeNewUserWithTaskListeners(userName: String, userPhone: Long, userEmail: String) {
-        val user = User(userName, userPhone, userEmail)
+        val userId = Random.nextLong()
+        val user = User(userId, userName, userPhone, userEmail)
 
         // Access userId from shared preferences
-        val userId = ""
 
-        database.child(userId).child(userName).setValue(user)
+        database.child(userId.toString()).child(userName).setValue(user)
             .addOnSuccessListener {
                 // Write was successful!
                 // ...

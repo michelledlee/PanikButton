@@ -8,14 +8,20 @@ import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.text.isDigitsOnly
 import com.example.panikbutton.R
+import com.example.panikbutton.data.ReadAndWriteSnippets
 import com.example.panikbutton.ui.profile.ProfileActivity
 import com.google.android.material.textfield.TextInputEditText
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.edit_profile_layout.*
 
-class EditProfileActivity : AppCompatActivity() {
+class EditProfileActivity : AppCompatActivity(), ReadAndWriteSnippets {
     private lateinit var editUserName: TextInputEditText
     private lateinit var editUserPhone: TextInputEditText
     private lateinit var editUserEmail: TextInputEditText
+
+    override lateinit var database: DatabaseReference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,7 +39,7 @@ class EditProfileActivity : AppCompatActivity() {
         val defaultUserEmailValue = resources.getString(R.string.user_email)
         val currentUserName = sharedPref.getString(getString(R.string.current_user_name), defaultUserNameValue)
         val currentPhoneName = sharedPref.getString(getString(R.string.current_phone_name), defaultUserPhoneValue)
-        val currentEmailName = sharedPref.getString(getString(R.string.current_user_name), defaultUserEmailValue)
+        val currentEmailName = sharedPref.getString(getString(R.string.current_email_name), defaultUserEmailValue)
 
         editUserName.setText(currentUserName)
         editUserPhone.setText(currentPhoneName)
@@ -41,16 +47,20 @@ class EditProfileActivity : AppCompatActivity() {
 
         // Updating SharedPreferences with new user data
         findViewById<Button>(R.id.save_user_profile).setOnClickListener {
-            if (saveNewUserData()) {
+            if (saveUserData()) {
                 // Go back to the Profile activity
                 val intent = Intent (this, ProfileActivity::class.java)
                 startActivity(intent)
             }
         }
+
+        // Initialize Firebase
+        database = Firebase.database.reference
+
     }
 
     /** Save updated user data to Shared Preferences and Firebase **/
-    private fun saveNewUserData(): Boolean {
+    private fun saveUserData(): Boolean {
         val inputtedPhone = findViewById<TextInputEditText>(R.id.edit_user_phone).text.toString()
         // Validation for phone number
         if (!validatePhone(inputtedPhone)) {
@@ -69,10 +79,16 @@ class EditProfileActivity : AppCompatActivity() {
         val sharedPref = this.getSharedPreferences(
             getString(R.string.preference_file_key), Context.MODE_PRIVATE)
 
-        // Save all updates
+        // Save all updates to shared preferences
         sharedPref.edit().putString(getString(R.string.current_user_name), inputtedName).apply()
         sharedPref.edit().putString(getString(R.string.current_phone_name), inputtedPhone).apply()
         sharedPref.edit().putString(getString(R.string.current_email_name), inputtedEmail).apply()
+
+        val defaultValue = resources.getInteger(R.integer.savedUserId)
+        val userId = sharedPref.getLong(getString(R.string.current_user_id), defaultValue.toLong())
+
+        // Update Firebase
+        editUser(userId, inputtedName, inputtedPhone.toLong(), inputtedEmail)
 
         return true
     }

@@ -7,17 +7,23 @@ import android.text.TextUtils
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import com.example.panikbutton.data.ReadAndWriteSnippets
 import com.example.panikbutton.databinding.ActivityEmailpasswordBinding
 import com.example.panikbutton.ui.profile.ProfileActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthMultiFactorException
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import java.util.*
+import kotlin.random.Random
 
-class EmailPasswordActivity : BaseActivity(), View.OnClickListener {
+class EmailPasswordActivity : BaseActivity(), ReadAndWriteSnippets, View.OnClickListener {
 
     private lateinit var auth: FirebaseAuth
+    override lateinit var database: DatabaseReference
     private lateinit var binding: ActivityEmailpasswordBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,9 +39,11 @@ class EmailPasswordActivity : BaseActivity(), View.OnClickListener {
         binding.verifyEmailButton.setOnClickListener(this)
         binding.reloadButton.setOnClickListener(this)
 
-        // Initialize Firebase auth
+        // Initialize Firebase
         auth = Firebase.auth
+        database = Firebase.database.reference
 
+        initializeDbRef()
     }
 
     /** Check if user is signed in and update UI **/
@@ -65,13 +73,16 @@ class EmailPasswordActivity : BaseActivity(), View.OnClickListener {
                     updateUI(user) // Update for current user
 
                     // Add to shared preferences
+                    val userId = Random.nextLong() // Create a userId
                     val sharedPref = this?.getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE)
                     with (sharedPref.edit()) {
+                        putLong(getString(R.string.current_user_id), userId)
                         putString(getString(R.string.current_user_name), email)
                         apply()
                     }
 
                     // Add to database
+                    writeNewUser(userId, resources.getString(R.string.user_name), 0, email)
 
                 } else {
                     // Sign in failure
@@ -156,6 +167,7 @@ class EmailPasswordActivity : BaseActivity(), View.OnClickListener {
         }
     }
 
+    /** Validate information entered into the form for sign in **/
     private fun validateForm(): Boolean {
         var valid = true
 
@@ -180,6 +192,7 @@ class EmailPasswordActivity : BaseActivity(), View.OnClickListener {
         return valid
     }
 
+    /** Updates the UI for the user information **/
     private fun updateUI(user: FirebaseUser?) {
         hideProgressBar()
         if (user != null) {
@@ -222,6 +235,7 @@ class EmailPasswordActivity : BaseActivity(), View.OnClickListener {
         }
     }
 
+    /** Binding functions to buttons **/
     override fun onClick(v: View) {
         when (v.id) {
             R.id.emailCreateAccountButton -> {
