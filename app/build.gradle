@@ -3,6 +3,7 @@ apply plugin: 'com.google.gms.google-services'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlinx-serialization'
+apply plugin: 'org.jetbrains.kotlin.android'
 
 android {
     compileSdkVersion 30
@@ -72,4 +73,7 @@ dependencies {
 
     // Multidex
     implementation 'com.android.support:multidex:1.0.3'
+
+    // Reflect
+    implementation "org.jetbrains.kotlin:kotlin-reflect:1.4.30"
 }

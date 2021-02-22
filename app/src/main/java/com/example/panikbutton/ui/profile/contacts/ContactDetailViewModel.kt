@@ -8,7 +8,7 @@ import com.example.panikbutton.data.DataSource
 
 class ContactDetailViewModel(private val dataSource: DataSource) : ViewModel() {
     /* Queries datasource to return a contact that corresponds to an id. */
-    fun getContactForId(id: Long) : Contact? {
+    fun getContactForId(id: Int) : Contact? {
         return dataSource.getContactForId(id)
     }
 

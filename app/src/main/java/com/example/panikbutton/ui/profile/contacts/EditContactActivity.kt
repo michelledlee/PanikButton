@@ -11,17 +11,18 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.text.isDigitsOnly
 import com.example.panikbutton.R
 import com.example.panikbutton.data.Contact
+import com.example.panikbutton.data.ReadAndWriteSnippets
 import com.example.panikbutton.ui.profile.CONTACT_ID
 import com.google.android.material.textfield.TextInputEditText
-import com.google.android.material.textfield.TextInputLayout
-import kotlinx.android.synthetic.main.add_contact_layout.*
-import kotlinx.android.synthetic.main.edit_profile_layout.*
+import com.google.firebase.database.DatabaseReference
 
 /* Opened from the ContactsAdapter.kt class when a user clicks on a RecyclerView item*/
-class EditContactActivity : AppCompatActivity() {
+class EditContactActivity : AppCompatActivity(), ReadAndWriteSnippets {
     private lateinit var editContactName: TextInputEditText
     private lateinit var editContactPhone: TextInputEditText
     private lateinit var editContactEmail: TextInputEditText
+
+    override lateinit var database: DatabaseReference
 
     private val contactDetailViewModel by viewModels<ContactDetailViewModel> {
         ContactDetailViewModelFactory(this)
@@ -50,26 +51,34 @@ class EditContactActivity : AppCompatActivity() {
 
         /* If currentContactId is not null, get corresponding contact details */
         currentContactId?.let {
-            val currentContact = contactDetailViewModel.getContactForId(it)
 
-            editContactName.setText(currentContact?.contactName)
-            editContactPhone.setText(currentContact?.contactPhone.toString())
-            editContactEmail.setText(currentContact?.contactEmail)
+//            // Gets from in-app database
+//            val currentContact = contactDetailViewModel.getContactForId(it)
+//            editContactName.setText(currentContact?.contactName)
+//            editContactPhone.setText(currentContact?.contactPhone.toString())
+//            editContactEmail.setText(currentContact?.contactEmail)
+
+            // Get from the database
+
 
             findViewById<Button>(R.id.delete_contact_button).setOnClickListener {
-                if (currentContact != null) {
-                    deleteContact(currentContact)
-                    finish()
-                }
+                val currentContact = getContact(currentContactId)
+
+                // Old version using data model
+//                deleteContact(currentContact)
+
+                // Delete from Firebase
+
+                finish()
             }
         }
 
 
     }
 
-    /* The onClick action for the done button. Closes the activity and returns the new contact name
+    /** The onClick action for the done button. Closes the activity and returns the new contact name
     and description as part of the intent. If the name or description are missing, the result is set
-    to cancelled. */
+    to cancelled. **/
     private fun editContact(): Boolean {
 
         val resultIntent = Intent()
@@ -79,7 +88,7 @@ class EditContactActivity : AppCompatActivity() {
             val name = editContactName.text.toString()
             val phone = editContactPhone.text.toString()
 
-        // Validation for phone number
+            // Validation for phone number
             if (!validatePhone(phone)) {
                 return false
             }
@@ -95,8 +104,18 @@ class EditContactActivity : AppCompatActivity() {
             setResult(Activity.RESULT_OK, resultIntent)
         }
 
+        // Save in Firebase
+
+
         return true
 
+    }
+
+    /** Deletes a contact from Firebase **/
+    private fun deleteContactFromFirebase(userId: Long) {
+        database.child("users").child(userId.toString()).removeValue()
+            .addOnSuccessListener { Log.d("EditContactActivity", "Contact $userId successfully deleted!") }
+            .addOnFailureListener { e -> Log.w("EditContactActivity", "Error deleting contact", e) }
     }
 
     /** Validate phone number so it can be formatted correctly in UI **/

@@ -4,9 +4,12 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 class Contact(
-//data class Contact (
-    val id: Long,
+    val id: Int,
     val contactName: String,
     val contactPhone: Long,
     val contactEmail: String
 )
+
+fun Contact(contact: Contact) : Contact{
+    return contact
+}

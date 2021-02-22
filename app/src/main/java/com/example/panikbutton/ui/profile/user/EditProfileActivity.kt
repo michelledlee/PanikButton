@@ -62,18 +62,18 @@ class EditProfileActivity : AppCompatActivity(), ReadAndWriteSnippets {
     /** Save updated user data to Shared Preferences and Firebase **/
     private fun saveUserData(): Boolean {
         val inputtedPhone = findViewById<TextInputEditText>(R.id.edit_user_phone).text.toString()
+        val inputtedEmail = findViewById<TextInputEditText>(R.id.edit_user_email).text.toString()
+        val inputtedName = findViewById<TextInputEditText>(R.id.edit_user_name).text.toString()
+
+        /* Form validation */
         // Validation for phone number
         if (!validatePhone(inputtedPhone)) {
             return false
         }
-
-        val inputtedEmail = findViewById<TextInputEditText>(R.id.edit_user_email).text.toString()
         // Validation for email
         if (!inputtedEmail.isEmailValid()) {
             return false
         }
-
-        val inputtedName = findViewById<TextInputEditText>(R.id.edit_user_name).text.toString()
 
         // Save the user details to SharedPreferences
         val sharedPref = this.getSharedPreferences(

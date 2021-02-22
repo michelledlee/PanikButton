@@ -1,7 +1,6 @@
 package com.example.panikbutton.data
 
-import android.content.Context
-import com.example.panikbutton.R
+import android.util.Log
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
@@ -50,9 +49,24 @@ interface ReadAndWriteSnippets {
     }
 
     /** Add a new contact to the database **/
-    fun writeNewContact(id: Long, contactName: String, contactPhone: Long, contactEmail: String) {
-        val user = Contact(id, contactName, contactPhone, contactEmail)
+    fun writeNewContact(userId: Long, contactId: Int, contactName: String, contactPhone: Long, contactEmail: String) {
+        val contact = Contact(contactId, contactName, contactPhone, contactEmail)
 
-        database.child("contacts").child(contactName).setValue(user)
+        database.child("users").child(userId.toString()).child("contacts").child("contactId").child(contactName).setValue(contact)
     }
+
+    /** Get contact based on ID **/
+    fun getContact(contactId: Long) : Contact {
+        lateinit var contact : Contact
+        database.child("users").child(contactId.toString()).get().addOnSuccessListener {
+            Log.i("firebase", "Got value ${it.value}")
+            contact = Contact(it.value as Contact)
+        }.addOnFailureListener{
+            Log.e("firebase", "Error getting data", it)
+        }
+
+        return contact
+    }
+
+
 }

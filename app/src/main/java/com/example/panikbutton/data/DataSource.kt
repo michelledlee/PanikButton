@@ -34,7 +34,7 @@ class DataSource: ViewModel() {
     }
 
     /* Returns contact given an ID. */
-    fun getContactForId(id: Long): Contact? {
+    fun getContactForId(id: Int): Contact? {
         contactsLiveData.value?.let { contacts ->
             return contacts.firstOrNull{ it.id == id}
         }

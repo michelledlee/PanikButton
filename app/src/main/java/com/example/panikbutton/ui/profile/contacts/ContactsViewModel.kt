@@ -20,7 +20,7 @@ class ContactsViewModel(val dataSource: DataSource) : ViewModel() {
 //        // EXTRA: Potentially used for avatars in the future
 //        val image = dataSource.getRandomContactImageAsset()
         val newContact = Contact(
-            Random.nextLong(),
+            Random.nextInt(),
             contactName,
             contactPhone,
             contactEmail.toString()
