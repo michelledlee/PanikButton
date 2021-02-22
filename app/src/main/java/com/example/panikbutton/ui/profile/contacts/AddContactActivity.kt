@@ -14,6 +14,8 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.database.DatabaseReference
 import kotlin.random.Random
 import com.example.panikbutton.databinding.ActivityAddcontactBinding
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 
 const val CONTACT_NAME = "name"
 const val CONTACT_PHONE = "phone"
@@ -41,6 +43,9 @@ class AddContactActivity : AppCompatActivity(), ReadAndWriteSnippets {
         addContactName = findViewById(R.id.add_contact_name)
         addContactPhone = findViewById(R.id.add_contact_phone)
         addContactEmail = findViewById(R.id.add_contact_email)
+
+        // Initialize Firebase
+        database = Firebase.database.reference
 
     }
 
@@ -71,7 +76,7 @@ class AddContactActivity : AppCompatActivity(), ReadAndWriteSnippets {
             // Generate contact id
             val contactId = Random.nextInt()
             // Create new contact
-            writeNewContact(getUserId(), contactId, name, phone.toLong(), email)
+            getUserId()?.let { getUserId()?.let { it1 -> writeNewContact(it1, contactId, name, phone.toLong(), email) } }
 
             // Pass intent
             resultIntent.putExtra(CONTACT_NAME, name)
@@ -84,10 +89,10 @@ class AddContactActivity : AppCompatActivity(), ReadAndWriteSnippets {
     }
 
     /** Get userId **/
-    private fun getUserId() : Long {
-        val sharedPref = this?.getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE)
-        val defaultValue = resources.getInteger(R.integer.savedUserId)
-        return sharedPref.getLong(getString(R.string.current_user_id), defaultValue.toLong())
+    private fun getUserId() : String? {
+        val sharedPref = this.getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE)
+        val defaultValue = resources.getString(R.string.current_user_id)
+        return sharedPref.getString(getString(R.string.current_user_id), defaultValue)
     }
 
     /** Validate phone number so it can be formatted correctly in UI **/

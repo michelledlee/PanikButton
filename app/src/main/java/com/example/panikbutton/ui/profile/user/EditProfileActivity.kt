@@ -84,11 +84,13 @@ class EditProfileActivity : AppCompatActivity(), ReadAndWriteSnippets {
         sharedPref.edit().putString(getString(R.string.current_phone_name), inputtedPhone).apply()
         sharedPref.edit().putString(getString(R.string.current_email_name), inputtedEmail).apply()
 
-        val defaultValue = resources.getInteger(R.integer.savedUserId)
-        val userId = sharedPref.getLong(getString(R.string.current_user_id), defaultValue.toLong())
+        val defaultValue = resources.getString(R.string.current_user_id)
+        val userId = sharedPref.getString(getString(R.string.current_user_id), defaultValue)
 
         // Update Firebase
-        editUser(userId, inputtedName, inputtedPhone.toLong(), inputtedEmail)
+        if (userId != null) {
+            editUser(userId, inputtedName, inputtedPhone.toLong(), inputtedEmail)
+        }
 
         return true
     }
@@ -121,7 +123,11 @@ class EditProfileActivity : AppCompatActivity(), ReadAndWriteSnippets {
 
     /** Validate email so it can be formatted correctly in UI **/
     private fun String.isEmailValid(): Boolean {
-        return !TextUtils.isEmpty(this) && android.util.Patterns.EMAIL_ADDRESS.matcher(this).matches()
+        val valid = !TextUtils.isEmpty(this) && android.util.Patterns.EMAIL_ADDRESS.matcher(this).matches()
+        if (!valid) {
+            edit_user_email.error = "Enter a valid email."
+        }
+        return valid
     }
 
 

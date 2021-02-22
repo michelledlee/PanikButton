@@ -32,11 +32,11 @@ class EditContactActivity : AppCompatActivity(), ReadAndWriteSnippets {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.edit_contact_layout)
 
-        var currentContactId: Long? = null
+        var currentContactId: String? = null
 
         val bundle: Bundle? = intent.extras
         if (bundle != null) {
-            currentContactId = bundle.getLong(CONTACT_ID)
+            currentContactId = bundle.getString(CONTACT_ID)
         }
 
         editContactName = findViewById(R.id.edit_contact_name)

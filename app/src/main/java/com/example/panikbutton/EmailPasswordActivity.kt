@@ -73,11 +73,12 @@ class EmailPasswordActivity : BaseActivity(), ReadAndWriteSnippets, View.OnClick
                     updateUI(user) // Update for current user
 
                     // Add to shared preferences
-                    val userId = Random.nextLong() // Create a userId
+                    val userId = Random.nextLong().toString() // Create a userId
                     val sharedPref = this?.getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE)
                     with (sharedPref.edit()) {
-                        putLong(getString(R.string.current_user_id), userId)
+                        putString(getString(R.string.current_user_id), userId)
                         putString(getString(R.string.current_user_name), email)
+                        putString(getString(R.string.current_email_name), email)
                         apply()
                     }
 

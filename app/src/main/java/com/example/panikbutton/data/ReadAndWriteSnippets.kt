@@ -17,14 +17,14 @@ interface ReadAndWriteSnippets {
     }
 
     /** Add a new user to the database **/
-    fun writeNewUser(userId: Long, userName: String, userPhone: Long, userEmail: String) {
+    fun writeNewUser(userId: String, userName: String, userPhone: Long, userEmail: String) {
         val user = User(userId, userName, userPhone, userEmail)
         database.child("users").child(userId.toString()).setValue(user)
 
     }
 
     /** Edit existing contact**/
-    fun editUser(userId: Long, userName: String, userPhone: Long, userEmail: String) {
+    fun editUser(userId: String, userName: String, userPhone: Long, userEmail: String) {
         val user = User(userId, userName, userPhone, userEmail)
         database.child("users").child(userId.toString()).setValue(user)
 
@@ -33,7 +33,7 @@ interface ReadAndWriteSnippets {
     /** Add a new user to the database with success/failure listeners **/
     fun writeNewUserWithTaskListeners(userName: String, userPhone: Long, userEmail: String) {
         val userId = Random.nextLong()
-        val user = User(userId, userName, userPhone, userEmail)
+        val user = User(userId.toString(), userName, userPhone, userEmail)
 
         // Access userId from shared preferences
 
@@ -49,16 +49,26 @@ interface ReadAndWriteSnippets {
     }
 
     /** Add a new contact to the database **/
-    fun writeNewContact(userId: Long, contactId: Int, contactName: String, contactPhone: Long, contactEmail: String) {
+    fun writeNewContact(userId: String, contactId: Int, contactName: String, contactPhone: Long, contactEmail: String) {
         val contact = Contact(contactId, contactName, contactPhone, contactEmail)
 
-        database.child("users").child(userId.toString()).child("contacts").child("contactId").child(contactName).setValue(contact)
+        Log.e("firebase", "FROM WRITE NEW CONTACT")
+
+        database.child("users").child(userId).child("contacts").child(contactId.toString()).setValue(contact)
+            .addOnSuccessListener {
+                // Write was successful!
+                Log.e("firebase", "SUCCESSFUL WRITE")
+            }
+            .addOnFailureListener {
+                // Write failed
+                Log.e("firebase", "FAILED WRITE")
+            }
     }
 
     /** Get contact based on ID **/
-    fun getContact(contactId: Long) : Contact {
+    fun getContact(contactId: String) : Contact {
         lateinit var contact : Contact
-        database.child("users").child(contactId.toString()).get().addOnSuccessListener {
+        database.child("users").child(contactId).get().addOnSuccessListener {
             Log.i("firebase", "Got value ${it.value}")
             contact = Contact(it.value as Contact)
         }.addOnFailureListener{
