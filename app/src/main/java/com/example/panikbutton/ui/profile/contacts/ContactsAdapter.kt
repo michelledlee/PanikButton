@@ -13,7 +13,7 @@ import com.example.panikbutton.data.Contact
 
 //class ContactsAdapter(private val onClick: (Contact) -> Unit) :
 //    ListAdapter<Contact, ContactsAdapter.ContactViewHolder>(ContactDiffCallback) {
-private val US_PHONE_LENGTH = 10
+const val US_PHONE_LENGTH = 10
 
 class ContactsAdapter(private val onClick: (Contact) -> Unit) :
     ListAdapter<Contact, ContactsAdapter.ContactViewHolder>(ContactDiffCallback) {
@@ -80,10 +80,10 @@ class ContactsAdapter(private val onClick: (Contact) -> Unit) :
         val contact = getItem(position)
         holder.bind(contact)
     }
-
-    fun getContact(holder: ContactViewHolder, position:Int): Contact {
-        return getItem(position)
-    }
+//
+//    fun getContact(holder: ContactViewHolder, position:Int): Contact {
+//        return getItem(position)
+//    }
 
 
 }

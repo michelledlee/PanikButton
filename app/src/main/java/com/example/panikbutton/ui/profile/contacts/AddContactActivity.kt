@@ -45,7 +45,8 @@ class AddContactActivity : AppCompatActivity(), ReadAndWriteSnippets {
         addContactEmail = findViewById(R.id.add_contact_email)
 
         // Initialize Firebase
-        database = Firebase.database.reference
+//        database = Firebase.database.reference
+        initializeDbRef()
 
     }
 

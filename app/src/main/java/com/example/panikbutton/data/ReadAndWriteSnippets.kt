@@ -109,5 +109,12 @@ interface ReadAndWriteSnippets {
 
     }
 
+    /** Deletes a contact from Firebase **/
+    fun deleteContactFromFirebase(userId: String) {
+        database.child("users").child(userId.toString()).removeValue()
+            .addOnSuccessListener { Log.d("EditContactActivity", "Contact $userId successfully deleted!") }
+            .addOnFailureListener { e -> Log.w("EditContactActivity", "Error deleting contact", e) }
+    }
+
 
 }

@@ -1,13 +1,17 @@
 package com.example.panikbutton.ui.profile
 
 import android.app.Activity
+import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentManager
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.navigation.Navigation
 import androidx.navigation.Navigation.findNavController
 import androidx.recyclerview.widget.ConcatAdapter
@@ -31,18 +35,17 @@ class ProfileActivity : AppCompatActivity(), ReadAndWriteSnippets {
 //    }
 
     override lateinit var database: DatabaseReference
-
     private lateinit var bottomNav: View
+    val contactsAdapter = ContactsAdapter { contact -> adapterOnClick(contact) }
+    val headerAdapter = HeaderAdapter()
+    val concatAdapter = ConcatAdapter(headerAdapter, contactsAdapter)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile)
-
-        /* Instantiates headerAdapter and contactsAdapter. Both adapters are added to concatAdapter.
-        which displays the contents sequentially */
-        val headerAdapter = HeaderAdapter()
-        val contactsAdapter = ContactsAdapter { contact -> adapterOnClick(contact) }
-        val concatAdapter = ConcatAdapter(headerAdapter, contactsAdapter)
+//
+//        LocalBroadcastManager.getInstance(this)
+//            .registerReceiver(broadCastReceiver, IntentFilter(BROADCAST_DEFAULT_ALBUM_CHANGED))
 
         val recyclerView: RecyclerView = findViewById(R.id.contacts_recyclerView)
         recyclerView.adapter = concatAdapter
@@ -72,6 +75,7 @@ class ProfileActivity : AppCompatActivity(), ReadAndWriteSnippets {
 //        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 //        supportActionBar?.setDisplayShowHomeEnabled(true)
 
+
         bottomNav = findViewById(R.id.navigation_home)
         bottomNav.setOnClickListener {
 //            onBackPressed()
@@ -87,6 +91,20 @@ class ProfileActivity : AppCompatActivity(), ReadAndWriteSnippets {
         }
     }
 
+//    override fun onDestroy() {
+//        super.onDestroy()
+//        LocalBroadcastManager.getInstance(this)
+//            .unregisterReceiver(broadCastReceiver)
+//    }
+
+//    val broadCastReceiver = object : BroadcastReceiver() {
+//        override fun onReceive(contxt: Context?, intent: Intent?) {
+//            when (intent?.action) {
+//                CONTACT_LIST_CHANGED -> contactsAdapter.notifyDataSetChanged()
+//            }
+//        }
+//    }
+
     /* Opens EditDetailActivity when RecyclerView item is clicked. */
     private fun adapterOnClick(contact: Contact) {
         val intent = Intent(this, EditContactActivity()::class.java)
@@ -100,18 +118,32 @@ class ProfileActivity : AppCompatActivity(), ReadAndWriteSnippets {
         startActivityForResult(intent, newContactActivityRequestCode)
     }
 
-//    override fun onActivityResult(requestCode: Int, resultCode: Int, intentData: Intent?) {
-//        super.onActivityResult(requestCode, resultCode, intentData)
-//        // Inserts contact into viewModel.
-//        if (requestCode == newContactActivityRequestCode && resultCode == Activity.RESULT_OK) {
+    override fun onActivityResult(requestCode: Int, resultCode: Int, intentData: Intent?) {
+        super.onActivityResult(requestCode, resultCode, intentData)
+//         Inserts contact into viewModel.
+        if (requestCode == newContactActivityRequestCode && resultCode == Activity.RESULT_OK) {
+            Log.e("onActivityResult", requestCode.toString())
+            val sharedPref =
+                this.getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE)
+            val defaultValue = getString(R.string.current_user_id )
+            val userId = sharedPref.getString(getString(R.string.current_user_id), defaultValue)
+            if (userId != null) {
+                getContacts(userId) {
+                    it.let {
+                        contactsAdapter.submitList(it as MutableList<Contact>)
+                        headerAdapter.updateContactCount(it.size)
+                        contactsAdapter.notifyDataSetChanged()
+                    }
+                }
+            }
 //            intentData?.let { data ->
 //                val contactName = data.getStringExtra(CONTACT_NAME)
 //                val contactPhone = data.getLongExtra(CONTACT_PHONE, -1)
 //                val contactEmail = data.getStringExtra(CONTACT_EMAIL)
 //                contactsListViewModel.insertContact(contactName, contactPhone, contactEmail)
 //            }
-//        }
-//    }
+        }
+    }
 
 //    override fun onSupportNavigateUp(): Boolean {
 //        try {

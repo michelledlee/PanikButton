@@ -21,12 +21,7 @@ class EditContactActivity : AppCompatActivity(), ReadAndWriteSnippets {
     private lateinit var editContactName: TextInputEditText
     private lateinit var editContactPhone: TextInputEditText
     private lateinit var editContactEmail: TextInputEditText
-
     override lateinit var database: DatabaseReference
-
-//    private val contactDetailViewModel by viewModels<ContactDetailViewModel> {
-//        ContactDetailViewModelFactory(this)
-//    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,10 +34,13 @@ class EditContactActivity : AppCompatActivity(), ReadAndWriteSnippets {
             currentContactId = bundle.getString(CONTACT_ID)
         }
 
+        // Getting fields to pull user data from
         editContactName = findViewById(R.id.edit_contact_name)
         editContactPhone = findViewById(R.id.edit_contact_phone)
         editContactEmail = findViewById(R.id.edit_contact_email)
 
+
+        // Hooking up save button
         findViewById<Button>(R.id.save_contact_profile).setOnClickListener {
             if (editContact()) {
                 finish()
@@ -51,29 +49,11 @@ class EditContactActivity : AppCompatActivity(), ReadAndWriteSnippets {
 
         /* If currentContactId is not null, get corresponding contact details */
         currentContactId?.let {
-
-//            // Gets from in-app database
-//            val currentContact = contactDetailViewModel.getContactForId(it)
-//            editContactName.setText(currentContact?.contactName)
-//            editContactPhone.setText(currentContact?.contactPhone.toString())
-//            editContactEmail.setText(currentContact?.contactEmail)
-
-            // Get from the database
-
-
             findViewById<Button>(R.id.delete_contact_button).setOnClickListener {
-                val currentContact = getContact(currentContactId)
-
-                // Old version using data model
-//                deleteContact(currentContact)
-
-                // Delete from Firebase
-
+                deleteContactFromFirebase(currentContactId)
                 finish()
             }
         }
-
-
     }
 
     /** The onClick action for the done button. Closes the activity and returns the new contact name
@@ -104,18 +84,8 @@ class EditContactActivity : AppCompatActivity(), ReadAndWriteSnippets {
             setResult(Activity.RESULT_OK, resultIntent)
         }
 
-        // Save in Firebase
-
-
         return true
 
-    }
-
-    /** Deletes a contact from Firebase **/
-    private fun deleteContactFromFirebase(userId: Long) {
-        database.child("users").child(userId.toString()).removeValue()
-            .addOnSuccessListener { Log.d("EditContactActivity", "Contact $userId successfully deleted!") }
-            .addOnFailureListener { e -> Log.w("EditContactActivity", "Error deleting contact", e) }
     }
 
     /** Validate phone number so it can be formatted correctly in UI **/
@@ -150,7 +120,4 @@ class EditContactActivity : AppCompatActivity(), ReadAndWriteSnippets {
         return !TextUtils.isEmpty(this) && android.util.Patterns.EMAIL_ADDRESS.matcher(this).matches()
     }
 
-//    private fun deleteContact(currentContact : Contact) {
-//        contactDetailViewModel.removeContact(currentContact)
-//    }
 }
