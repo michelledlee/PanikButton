@@ -3,7 +3,7 @@ package com.example.panikbutton.ui.profile.user
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.telephony.PhoneNumberUtils
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,7 +13,7 @@ import kotlinx.android.synthetic.main.fragment_profile.view.*
 import java.util.*
 
 class ProfileFragment : Fragment() {
-
+    private val US_PHONE_LENGTH = 10
     override fun onCreateView(
             inflater: LayoutInflater,
             container: ViewGroup?,
@@ -31,14 +31,20 @@ class ProfileFragment : Fragment() {
         val currentEmail = sharedPref?.getString(getString(R.string.current_email_name), defaultUserEmailValue)
 
         view.profile_userName.text = currentUserName
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-            view.profile_userPhone.text = PhoneNumberUtils.formatNumber(
-                currentPhone.toString(),
-                Locale.getDefault().country
-            )
-        } else {
-            view.profile_userPhone.text = currentPhone
-        }
+//        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+//            view.profile_userPhone.text = PhoneNumberUtils.formatNumber(
+//                currentPhone.toString(),
+//                Locale.getDefault().country
+//            )
+            view.profile_userPhone.text = formatPhone(currentPhone.toString())
+            Log.e("number - lollipop", currentPhone.toString())
+            Log.e("country", Locale.getDefault().country)
+//        } else {
+//            if (view.profile_userPhone.text.length == USPHONELENGTH) {
+//                view.profile_userPhone.text = formatPhone(currentPhone.toString())
+//                Log.e("number - custom", view.profile_userPhone.text.toString())
+//            }
+//        }
 
         view.profile_userEmail.text = currentEmail
 
@@ -48,5 +54,15 @@ class ProfileFragment : Fragment() {
         }
 
         return view
+    }
+
+    private fun formatPhone(number: String): String {
+        if (number.length == US_PHONE_LENGTH) {
+            val areaCode = number.substring(0, 3)
+            val prefix = number.substring(3, 6)
+            val subscriber = number.substring(6)
+            return "($areaCode) $prefix-$subscriber"
+        }
+        return number
     }
 }

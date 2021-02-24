@@ -1,6 +1,5 @@
 package com.example.panikbutton.ui.profile.contacts
 
-import android.telephony.PhoneNumberUtils.formatNumber
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,11 +9,11 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.panikbutton.R
 import com.example.panikbutton.data.Contact
-import java.util.*
 
 
 //class ContactsAdapter(private val onClick: (Contact) -> Unit) :
 //    ListAdapter<Contact, ContactsAdapter.ContactViewHolder>(ContactDiffCallback) {
+private val US_PHONE_LENGTH = 10
 
 class ContactsAdapter(private val onClick: (Contact) -> Unit) :
     ListAdapter<Contact, ContactsAdapter.ContactViewHolder>(ContactDiffCallback) {
@@ -41,15 +40,16 @@ class ContactsAdapter(private val onClick: (Contact) -> Unit) :
             currentContact = contact
 
             contactNameTextView.text = contact.contactName
-            // Checking for Android versions > Lollipop for phone number formatting
-            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-                contactPhoneTextView.text = formatNumber(
-                    contact.contactPhone.toString(),
-                    Locale.getDefault().country
-                )
-//                Log.e("number", contactPhoneTextView.text.toString())
+            contactPhoneTextView.text = formatPhone(contact.contactPhone.toString())
+//            // Checking for Android versions > Lollipop for phone number formatting
+//            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+//                contactPhoneTextView.text = formatNumber(
+//                    contact.contactPhone.toString(),
+//                    Locale.getDefault().country
+//                )
+//                Log.e("number", contact.contactPhone.toString())
 //                Log.e("country", Locale.getDefault().country.toString())
-            }
+//            }
             contactEmailTextView.text = contact.contactEmail
             // EXTRA: For if we want to set avatar images later
 //            if (contact.image != null) {
@@ -57,6 +57,16 @@ class ContactsAdapter(private val onClick: (Contact) -> Unit) :
 //            } else {
 //                contactImageView.setImageResource(R.drawable.avatar)
 //            }
+        }
+
+        private fun formatPhone(number: String): String {
+            if (number.length == US_PHONE_LENGTH) {
+                val areaCode = number.substring(0, 3)
+                val prefix = number.substring(3, 6)
+                val subscriber = number.substring(6)
+                return "($areaCode) $prefix-$subscriber"
+            }
+            return number
         }
     }
 
@@ -74,6 +84,8 @@ class ContactsAdapter(private val onClick: (Contact) -> Unit) :
     fun getContact(holder: ContactViewHolder, position:Int): Contact {
         return getItem(position)
     }
+
+
 }
 
 object ContactDiffCallback : DiffUtil.ItemCallback<Contact>() {

@@ -24,9 +24,9 @@ class EditContactActivity : AppCompatActivity(), ReadAndWriteSnippets {
 
     override lateinit var database: DatabaseReference
 
-    private val contactDetailViewModel by viewModels<ContactDetailViewModel> {
-        ContactDetailViewModelFactory(this)
-    }
+//    private val contactDetailViewModel by viewModels<ContactDetailViewModel> {
+//        ContactDetailViewModelFactory(this)
+//    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -150,7 +150,7 @@ class EditContactActivity : AppCompatActivity(), ReadAndWriteSnippets {
         return !TextUtils.isEmpty(this) && android.util.Patterns.EMAIL_ADDRESS.matcher(this).matches()
     }
 
-    private fun deleteContact(currentContact : Contact) {
-        contactDetailViewModel.removeContact(currentContact)
-    }
+//    private fun deleteContact(currentContact : Contact) {
+//        contactDetailViewModel.removeContact(currentContact)
+//    }
 }

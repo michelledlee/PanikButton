@@ -26,9 +26,9 @@ const val CONTACT_ID = "contact id"
 class ProfileActivity : AppCompatActivity(), ReadAndWriteSnippets {
 
     private val newContactActivityRequestCode = 1
-    private val contactsListViewModel by viewModels<ContactsViewModel> {
-        ContactsListViewModelFactory(this)
-    }
+//    private val contactsListViewModel by viewModels<ContactsViewModel> {
+//        ContactsListViewModelFactory(this)
+//    }
 
     override lateinit var database: DatabaseReference
 
@@ -100,18 +100,18 @@ class ProfileActivity : AppCompatActivity(), ReadAndWriteSnippets {
         startActivityForResult(intent, newContactActivityRequestCode)
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, intentData: Intent?) {
-        super.onActivityResult(requestCode, resultCode, intentData)
-        // Inserts contact into viewModel.
-        if (requestCode == newContactActivityRequestCode && resultCode == Activity.RESULT_OK) {
-            intentData?.let { data ->
-                val contactName = data.getStringExtra(CONTACT_NAME)
-                val contactPhone = data.getLongExtra(CONTACT_PHONE, -1)
-                val contactEmail = data.getStringExtra(CONTACT_EMAIL)
-                contactsListViewModel.insertContact(contactName, contactPhone, contactEmail)
-            }
-        }
-    }
+//    override fun onActivityResult(requestCode: Int, resultCode: Int, intentData: Intent?) {
+//        super.onActivityResult(requestCode, resultCode, intentData)
+//        // Inserts contact into viewModel.
+//        if (requestCode == newContactActivityRequestCode && resultCode == Activity.RESULT_OK) {
+//            intentData?.let { data ->
+//                val contactName = data.getStringExtra(CONTACT_NAME)
+//                val contactPhone = data.getLongExtra(CONTACT_PHONE, -1)
+//                val contactEmail = data.getStringExtra(CONTACT_EMAIL)
+//                contactsListViewModel.insertContact(contactName, contactPhone, contactEmail)
+//            }
+//        }
+//    }
 
 //    override fun onSupportNavigateUp(): Boolean {
 //        try {

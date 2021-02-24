@@ -16,12 +16,13 @@ import androidx.navigation.ui.setupWithNavController
 //import com.example.panikbutton.data.Contacts
 import com.example.panikbutton.ui.about.AboutActivity
 import com.example.panikbutton.ui.profile.ProfileActivity
-import com.example.panikbutton.ui.profile.user.ProfileDialogFragment
+//import com.example.panikbutton.ui.profile.user.ProfileDialogFragment
 import com.example.panikbutton.ui.settings.SettingsActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 
-class MainActivity : AppCompatActivity(), ProfileDialogFragment.ProfileDialogListener {
+class MainActivity : AppCompatActivity() {
+//    class MainActivity : AppCompatActivity(), ProfileDialogFragment.ProfileDialogListener {
 
     private lateinit var auth: FirebaseAuth
 
@@ -85,25 +86,25 @@ class MainActivity : AppCompatActivity(), ProfileDialogFragment.ProfileDialogLis
         val sharedPref = getSharedPreferences(
             getString(R.string.preference_file_key), Context.MODE_PRIVATE)
         val initialStart = sharedPref.getString(getString(R.string.entered_user_info), "true")
-        if (initialStart == "true") {
-            showProfileDialog()
-        }
+//        if (initialStart == "true") {
+//            showProfileDialog()
+//        }
     }
 
-    /* Function to show the profile dialog */
-    private fun showProfileDialog() {
-        val dialog = ProfileDialogFragment()
-        dialog.isCancelable = false
-        dialog.show(supportFragmentManager, "ProfileDialogFragment")
-    }
-
-    override fun onDialogPositiveClick(dialog: DialogFragment) {
-        TODO("Not yet implemented")
-    }
-
-    override fun onDialogNegativeClick(dialog: DialogFragment) {
-        TODO("Not yet implemented")
-    }
+//    /* Function to show the profile dialog */
+//    private fun showProfileDialog() {
+//        val dialog = ProfileDialogFragment()
+//        dialog.isCancelable = false
+//        dialog.show(supportFragmentManager, "ProfileDialogFragment")
+//    }
+//
+//    override fun onDialogPositiveClick(dialog: DialogFragment) {
+//        TODO("Not yet implemented")
+//    }
+//
+//    override fun onDialogNegativeClick(dialog: DialogFragment) {
+//        TODO("Not yet implemented")
+//    }
 
 //    companion object {
 //        lateinit var sharedPreferences: SharedPreferences
