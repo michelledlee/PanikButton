@@ -1,15 +1,39 @@
 package com.example.panikbutton.data
 
+import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.panikbutton.MainActivity
+import com.example.panikbutton.R
+//import com.example.panikbutton.data.Contacts
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 
-//class DataSource(resources: Resources, sharedPref : SharedPreferences): ViewModel() {
-class DataSource: ViewModel() {
+class DataSource: ViewModel(), ReadAndWriteSnippets {
 
     private val initialContactList = contactList()
-//    private val initialContactList = getInitialContactList(resources, sharedPref)
     private val contactsLiveData = MutableLiveData(initialContactList)
+    override lateinit var database: DatabaseReference
+
+//    private fun contactList(): List<Contact> {
+//        database = Firebase.database.reference
+//        lateinit var thelist: List<Contact>
+//
+//        val value =
+//        val defaultValue = MainActivity.Strings.get(R.string.current_user_id)
+//        val userId = MainActivity.sharedPreferences.getString(
+//            MainActivity.Strings.get(R.string.current_user_id),
+//            defaultValue
+//        )
+//        if (userId != null) {
+//            getContacts(userId) {
+//                thelist = it
+//            }
+//        }
+//        return thelist
+//    }
 
     /* Adds contact to liveData and posts value. */
     fun addContact(contact: Contact) {
@@ -44,34 +68,6 @@ class DataSource: ViewModel() {
     fun getContactList(): LiveData<List<Contact>> {
         return contactsLiveData
     }
-
-//    fun getInitialContactList(resources : Resources, sharedPref: SharedPreferences) : List<Contact> {
-//        // Get the file name
-//        val uri = sharedPref.getString(resources.getString(R.string.contactsURI), "false")
-//            ?.replace("file:/","")
-////        Log.e("initial URI:", uri.toString())
-////        File(uri).canWrite()
-////        FileWriter(uri).append("testing")
-////        FileWriter(uri).flush()
-////        val fileContents : String = File(uri).readText()
-////        // Testing the file output
-////        Log.e("File contents", fileContents.length.toString())
-//        val testfileName = "Contacts.txt"
-//        FileWriter(testfileName).write("hello world")
-//        FileWriter(testfileName).flush()
-//        Log.e("testFileLength", testfileName.length.toString())
-//        val contactList : ArrayList<Contact> = arrayListOf()
-//        if (uri != "false") {
-////            val parsedURI = URI.create(uri)
-////            Log.e("parsedURI:", parsedURI.toString())
-//            File(uri).forEachLine {
-//                Log.e("line:", it)
-//                it.split(".")
-//                contactList.add(Contact(it[0].toLong(), it[1].toString(), it[2].toLong(), it[3].toString()))
-//            }
-//        }
-//        return contactList
-//    }
 
     companion object {
         private var INSTANCE: DataSource? = null

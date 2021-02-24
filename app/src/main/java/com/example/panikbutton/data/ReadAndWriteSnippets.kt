@@ -1,7 +1,10 @@
 package com.example.panikbutton.data
 
 import android.util.Log
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import kotlin.random.Random
@@ -68,14 +71,42 @@ interface ReadAndWriteSnippets {
     /** Get contact based on ID **/
     fun getContact(contactId: String) : Contact {
         lateinit var contact : Contact
-        database.child("users").child(contactId).get().addOnSuccessListener {
+        database.child("users").child(contactId).get().addOnSuccessListener { it ->
             Log.i("firebase", "Got value ${it.value}")
-            contact = Contact(it.value as Contact)
+            it.getValue(Contact::class.java)?.let {
+                contact = Contact(it.id, it.contactName, it.contactPhone, it.contactEmail)
+            }
+//            contact = Contact(it.value as Contact)
         }.addOnFailureListener{
             Log.e("firebase", "Error getting data", it)
         }
 
         return contact
+    }
+
+    fun getContacts(userId: String, callback: (list: List<Contact>) -> Unit) {
+        database.child("users").child(userId).child("contacts").addListenerForSingleValueEvent(
+            object : ValueEventListener {
+                // Parse each of the children into a list
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    Log.e("contacts", snapshot.toString())
+                    if (snapshot.exists()) {
+                        val list: MutableList<Contact> = mutableListOf()
+                        val children = snapshot.children
+                        children.forEach {
+                            it.getValue(Contact::class.java)?.let {
+                                    it1 -> list.add(Contact(it1.id, it1.contactName, it1.contactPhone, it1.contactEmail))
+                            }
+                        }
+                        callback(list)
+                    }
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    Log.e("getContacts", "failed to read value")
+                }
+            })
+
     }
 
 

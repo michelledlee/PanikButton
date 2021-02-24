@@ -15,18 +15,22 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.panikbutton.R
 import com.example.panikbutton.data.Contact
+import com.example.panikbutton.data.ReadAndWriteSnippets
 import com.example.panikbutton.ui.home.HomeActivity
 import com.example.panikbutton.ui.home.HomeFragment
 import com.example.panikbutton.ui.profile.contacts.*
+import com.google.firebase.database.DatabaseReference
 
 const val CONTACT_ID = "contact id"
 
-class ProfileActivity : AppCompatActivity() {
+class ProfileActivity : AppCompatActivity(), ReadAndWriteSnippets {
 
     private val newContactActivityRequestCode = 1
     private val contactsListViewModel by viewModels<ContactsViewModel> {
         ContactsListViewModelFactory(this)
     }
+
+    override lateinit var database: DatabaseReference
 
     private lateinit var bottomNav: View
 
@@ -44,12 +48,26 @@ class ProfileActivity : AppCompatActivity() {
         recyclerView.adapter = concatAdapter
         recyclerView.layoutManager = LinearLayoutManager(this)
 
-        contactsListViewModel.contactLiveData.observe(this, {
-            it?.let {
-                contactsAdapter.submitList(it as MutableList<Contact>)
-                headerAdapter.updateContactCount(it.size)
+        initializeDbRef()
+
+        val sharedPref =
+            this.getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE)
+        val defaultValue = getString(R.string.current_user_id )
+        val userId = sharedPref.getString(getString(R.string.current_user_id), defaultValue)
+        if (userId != null) {
+            getContacts(userId) {
+                it.let {
+                    contactsAdapter.submitList(it as MutableList<Contact>)
+                    headerAdapter.updateContactCount(it.size)
+                }
             }
-        })
+        }
+//        contactsListViewModel.contactLiveData.observe(this, {
+//            it?.let {
+//                contactsAdapter.submitList(it as MutableList<Contact>)
+//                headerAdapter.updateContactCount(it.size)
+//            }
+//        })
 
 //        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 //        supportActionBar?.setDisplayShowHomeEnabled(true)

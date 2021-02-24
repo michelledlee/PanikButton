@@ -41,7 +41,7 @@ class EmailPasswordActivity : BaseActivity(), ReadAndWriteSnippets, View.OnClick
 
         // Initialize Firebase
         auth = Firebase.auth
-        database = Firebase.database.reference
+//        database = Firebase.database.reference
 
         initializeDbRef()
     }
@@ -74,7 +74,8 @@ class EmailPasswordActivity : BaseActivity(), ReadAndWriteSnippets, View.OnClick
 
                     // Add to shared preferences
                     val userId = Random.nextLong().toString() // Create a userId
-                    val sharedPref = this?.getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE)
+                    val sharedPref =
+                        this.getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE)
                     with (sharedPref.edit()) {
                         putString(getString(R.string.current_user_id), userId)
                         putString(getString(R.string.current_user_name), email)
