@@ -108,7 +108,8 @@ class ProfileActivity : AppCompatActivity(), ReadAndWriteSnippets {
     /* Opens EditDetailActivity when RecyclerView item is clicked. */
     private fun adapterOnClick(contact: Contact) {
         val intent = Intent(this, EditContactActivity()::class.java)
-        intent.putExtra(CONTACT_ID, contact.id)
+        intent.putExtra(CONTACT_ID, contact.id.toString())
+        Log.e("from profile activity", contact.id.toString())
         startActivityForResult(intent, newContactActivityRequestCode)
     }
 

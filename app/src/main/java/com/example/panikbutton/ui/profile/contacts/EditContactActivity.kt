@@ -1,6 +1,7 @@
 package com.example.panikbutton.ui.profile.contacts
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
@@ -31,7 +32,7 @@ class EditContactActivity : AppCompatActivity(), ReadAndWriteSnippets {
 
         val bundle: Bundle? = intent.extras
         if (bundle != null) {
-            currentContactId = bundle.getString(CONTACT_ID)
+            currentContactId = bundle.getString("contact id")
         }
 
         // Getting fields to pull user data from
@@ -39,6 +40,25 @@ class EditContactActivity : AppCompatActivity(), ReadAndWriteSnippets {
         editContactPhone = findViewById(R.id.edit_contact_phone)
         editContactEmail = findViewById(R.id.edit_contact_email)
 
+        // Need database reference to get contact details
+        initializeDbRef()
+
+        // Need a reference to the userID to get contacts
+        val sharedPref =
+            this.getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE)
+        val defaultValue = getString(R.string.current_user_id )
+        val userId = sharedPref.getString(getString(R.string.current_user_id), defaultValue)
+
+        // Populating fields with the contact detail
+        if (currentContactId != null) {
+            getContact(userId.toString(), currentContactId) {
+                it.let {
+                    editContactName.setText(it.contactName)
+                    editContactPhone.setText(it.contactPhone.toString())
+                    editContactEmail.setText(it.contactEmail)
+                }
+            }
+        }
 
         // Hooking up save button
         findViewById<Button>(R.id.save_contact_profile).setOnClickListener {

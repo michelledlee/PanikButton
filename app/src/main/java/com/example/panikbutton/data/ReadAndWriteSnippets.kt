@@ -69,19 +69,15 @@ interface ReadAndWriteSnippets {
     }
 
     /** Get contact based on ID **/
-    fun getContact(contactId: String) : Contact {
-        lateinit var contact : Contact
-        database.child("users").child(contactId).get().addOnSuccessListener { it ->
+    fun getContact(userId: String, contactId: String, callback: (contact: Contact) -> Unit ) {
+        database.child("users").child(userId).child("contacts").child(contactId).get().addOnSuccessListener { it ->
             Log.i("firebase", "Got value ${it.value}")
             it.getValue(Contact::class.java)?.let {
-                contact = Contact(it.id, it.contactName, it.contactPhone, it.contactEmail)
+                callback(Contact(it.id, it.contactName, it.contactPhone, it.contactEmail))
             }
-//            contact = Contact(it.value as Contact)
         }.addOnFailureListener{
             Log.e("firebase", "Error getting data", it)
         }
-
-        return contact
     }
 
     fun getContacts(userId: String, callback: (list: List<Contact>) -> Unit) {
