@@ -22,17 +22,19 @@ class EditContactActivity : AppCompatActivity(), ReadAndWriteSnippets {
     private lateinit var editContactName: TextInputEditText
     private lateinit var editContactPhone: TextInputEditText
     private lateinit var editContactEmail: TextInputEditText
+    private lateinit var userId : String
+    private lateinit var currentContactId: String
     override lateinit var database: DatabaseReference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.edit_contact_layout)
 
-        var currentContactId: String? = null
+//        var currentContactId: String? = null
 
         val bundle: Bundle? = intent.extras
         if (bundle != null) {
-            currentContactId = bundle.getString("contact id")
+            currentContactId = bundle.getString("contact id").toString()
         }
 
         // Getting fields to pull user data from
@@ -47,7 +49,7 @@ class EditContactActivity : AppCompatActivity(), ReadAndWriteSnippets {
         val sharedPref =
             this.getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE)
         val defaultValue = getString(R.string.current_user_id )
-        val userId = sharedPref.getString(getString(R.string.current_user_id), defaultValue)
+         userId = sharedPref.getString(getString(R.string.current_user_id), defaultValue).toString()
 
         // Populating fields with the contact detail
         if (currentContactId != null) {
@@ -80,7 +82,6 @@ class EditContactActivity : AppCompatActivity(), ReadAndWriteSnippets {
     and description as part of the intent. If the name or description are missing, the result is set
     to cancelled. **/
     private fun editContact(): Boolean {
-
         val resultIntent = Intent()
         if (editContactName.text.isNullOrEmpty() || editContactPhone.text.isNullOrEmpty()) {
             setResult(Activity.RESULT_CANCELED, resultIntent)
@@ -97,6 +98,8 @@ class EditContactActivity : AppCompatActivity(), ReadAndWriteSnippets {
             if (!email.isEmailValid()) {
                 return false
             }
+
+            saveContact(userId, currentContactId.toInt(), name, phone.toLong(), email)
 
             resultIntent.putExtra(CONTACT_NAME, name)
             resultIntent.putExtra(CONTACT_PHONE, phone.toLong())

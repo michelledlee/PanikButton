@@ -1,5 +1,6 @@
 package com.example.panikbutton.data
 
+import com.google.firebase.database.Exclude
 import kotlinx.serialization.Serializable
 
 //@Serializable
@@ -17,6 +18,16 @@ data class Contact(
     val contactEmail: String
 ) {
     constructor() : this(-1, "", -1, "")
+
+    @Exclude
+    fun toMap(): Map<String, Any?> {
+        return mapOf(
+            "id" to id,
+            "contactName" to contactName,
+            "contactPhone" to contactPhone,
+            "contactEmail" to contactEmail
+        )
+    }
 }
 
 //fun Contact(contact: Contact) : Contact{

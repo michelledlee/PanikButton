@@ -105,6 +105,30 @@ interface ReadAndWriteSnippets {
 
     }
 
+    /** Save edited existing contact **/
+    fun saveContact(userId: String, contactId: Int, contactName: String, contactPhone: Long, contactEmail: String) {
+//        val key = database.child("users").child(userId).child("contacts").child(contactId.toString())
+//        Log.e("key", key);
+        val contact = Contact(contactId, contactName, contactPhone, contactEmail)
+//        val contactValues = contact.toMap()
+//
+//        val childUpdates = hashMapOf<String, Any>(
+//            "/$key" to contactValues,
+//        )
+//
+//        database.updateChildren(childUpdates)
+
+        database.child("users").child(userId).child("contacts").child(contactId.toString()).setValue(contact)
+            .addOnSuccessListener {
+                // Write was successful!
+                Log.e("success", "ReadAndWrite")
+            }
+            .addOnFailureListener {
+                // Write failed
+                // ...
+            }
+    }
+
     /** Deletes a contact from Firebase **/
     fun deleteContactFromFirebase(userId: String) {
         database.child("users").child(userId.toString()).removeValue()
