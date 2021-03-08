@@ -4,4 +4,6 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="title_bottom_margin">8dp</dimen>
     <dimen name="button_horizontal_margin">10dp</dimen>
+    <dimen name="recycler_height">300dp</dimen>
+    <dimen name="top_padding">8dp</dimen>
 </resources>
