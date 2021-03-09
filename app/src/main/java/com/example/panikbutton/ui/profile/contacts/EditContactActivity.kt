@@ -52,13 +52,11 @@ class EditContactActivity : AppCompatActivity(), ReadAndWriteSnippets {
          userId = sharedPref.getString(getString(R.string.current_user_id), defaultValue).toString()
 
         // Populating fields with the contact detail
-        if (currentContactId != null) {
-            getContact(userId.toString(), currentContactId) {
-                it.let {
-                    editContactName.setText(it.contactName)
-                    editContactPhone.setText(it.contactPhone.toString())
-                    editContactEmail.setText(it.contactEmail)
-                }
+        getContact(userId.toString(), currentContactId) {
+            it.let {
+                editContactName.setText(it.contactName)
+                editContactPhone.setText(it.contactPhone.toString())
+                editContactEmail.setText(it.contactEmail)
             }
         }
 
@@ -70,12 +68,13 @@ class EditContactActivity : AppCompatActivity(), ReadAndWriteSnippets {
         }
 
         /* If currentContactId is not null, get corresponding contact details */
-        currentContactId?.let {
-            findViewById<Button>(R.id.delete_contact_button).setOnClickListener {
-                deleteContactFromFirebase(currentContactId)
+//        currentContactId.let {
+        findViewById<Button>(R.id.delete_contact_button).setOnClickListener {
+            if (deleteContact()) {
                 finish()
             }
         }
+//        }
     }
 
     /** The onClick action for the done button. Closes the activity and returns the new contact name
@@ -108,7 +107,14 @@ class EditContactActivity : AppCompatActivity(), ReadAndWriteSnippets {
         }
 
         return true
+    }
 
+    /** **/
+    private fun deleteContact(): Boolean {
+        val resultIntent = Intent()
+        deleteContactFromFirebase(userId, currentContactId)
+        setResult(Activity.RESULT_OK, resultIntent)
+        return true
     }
 
     /** Validate phone number so it can be formatted correctly in UI **/

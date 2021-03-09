@@ -22,22 +22,12 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 
 class MainActivity : AppCompatActivity() {
-//    class MainActivity : AppCompatActivity(), ProfileDialogFragment.ProfileDialogListener {
 
     private lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-////         Shared preferences
-//        sharedPreferences = applicationContext.getSharedPreferences(
-//            getString(R.string.preference_file_key),
-//            Context.MODE_PRIVATE
-//        )
-////
-////        // Context
-//        instance = this
 
         /* Set views */
         val navView: BottomNavigationView = findViewById(R.id.nav_view)
@@ -56,7 +46,7 @@ class MainActivity : AppCompatActivity() {
     public override fun onStart() {
         super.onStart()
 
-        val currentUSer = auth.currentUser
+        val currentUser = auth.currentUser
 //        updateUI(currentUser)
     }
 
@@ -104,17 +94,6 @@ class MainActivity : AppCompatActivity() {
 //
 //    override fun onDialogNegativeClick(dialog: DialogFragment) {
 //        TODO("Not yet implemented")
-//    }
-
-//    companion object {
-//        lateinit var sharedPreferences: SharedPreferences
-//        lateinit var instance: MainActivity private set
-//    }
-//
-//    object Strings {
-//        fun get(@StringRes stringRes: Int, vararg formatArgs: Any = emptyArray()): String {
-//            return instance.getString(stringRes, *formatArgs)
-//        }
 //    }
 
 }

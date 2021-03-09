@@ -80,6 +80,7 @@ interface ReadAndWriteSnippets {
         }
     }
 
+    /** Gets current list of contacts **/
     fun getContacts(userId: String, callback: (list: List<Contact>) -> Unit) {
         database.child("users").child(userId).child("contacts").addListenerForSingleValueEvent(
             object : ValueEventListener {
@@ -107,31 +108,21 @@ interface ReadAndWriteSnippets {
 
     /** Save edited existing contact **/
     fun saveContact(userId: String, contactId: Int, contactName: String, contactPhone: Long, contactEmail: String) {
-//        val key = database.child("users").child(userId).child("contacts").child(contactId.toString())
-//        Log.e("key", key);
         val contact = Contact(contactId, contactName, contactPhone, contactEmail)
-//        val contactValues = contact.toMap()
-//
-//        val childUpdates = hashMapOf<String, Any>(
-//            "/$key" to contactValues,
-//        )
-//
-//        database.updateChildren(childUpdates)
-
         database.child("users").child(userId).child("contacts").child(contactId.toString()).setValue(contact)
             .addOnSuccessListener {
                 // Write was successful!
-                Log.e("success", "ReadAndWrite")
+                Log.e("saveContact", "Success!")
             }
             .addOnFailureListener {
                 // Write failed
-                // ...
+                Log.e("saveContact", "Failed :(")
             }
     }
 
     /** Deletes a contact from Firebase **/
-    fun deleteContactFromFirebase(userId: String) {
-        database.child("users").child(userId.toString()).removeValue()
+    fun deleteContactFromFirebase(userId: String, contactId: String) {
+        database.child("users").child(userId).child("contacts").child(contactId).removeValue()
             .addOnSuccessListener { Log.d("EditContactActivity", "Contact $userId successfully deleted!") }
             .addOnFailureListener { e -> Log.w("EditContactActivity", "Error deleting contact", e) }
     }
