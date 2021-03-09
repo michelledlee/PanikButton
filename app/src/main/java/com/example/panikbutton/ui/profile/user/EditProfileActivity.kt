@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
 import android.widget.Button
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.text.isDigitsOnly
 import com.example.panikbutton.R
@@ -47,11 +48,7 @@ class EditProfileActivity : AppCompatActivity(), ReadAndWriteSnippets {
 
         // Updating SharedPreferences with new user data
         findViewById<Button>(R.id.save_user_profile).setOnClickListener {
-            if (saveUserData()) {
-                // Go back to the Profile activity
-                val intent = Intent (this, ProfileActivity::class.java)
-                startActivity(intent)
-            }
+            saveUserData()
         }
 
         // Initialize Firebase

@@ -30,22 +30,16 @@ const val CONTACT_ID = "contact id"
 class ProfileActivity : AppCompatActivity(), ReadAndWriteSnippets {
 
     private val newContactActivityRequestCode = 1
-//    private val contactsListViewModel by viewModels<ContactsViewModel> {
-//        ContactsListViewModelFactory(this)
-//    }
 
     override lateinit var database: DatabaseReference
     private lateinit var bottomNav: View
-    val contactsAdapter = ContactsAdapter { contact -> adapterOnClick(contact) }
-    val headerAdapter = HeaderAdapter()
-    val concatAdapter = ConcatAdapter(headerAdapter, contactsAdapter)
+    private val contactsAdapter = ContactsAdapter { contact -> adapterOnClick(contact) }
+    private val headerAdapter = HeaderAdapter()
+    private val concatAdapter = ConcatAdapter(headerAdapter, contactsAdapter)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile)
-//
-//        LocalBroadcastManager.getInstance(this)
-//            .registerReceiver(broadCastReceiver, IntentFilter(BROADCAST_DEFAULT_ALBUM_CHANGED))
 
         val recyclerView: RecyclerView = findViewById(R.id.contacts_recyclerView)
         recyclerView.adapter = concatAdapter
@@ -58,19 +52,13 @@ class ProfileActivity : AppCompatActivity(), ReadAndWriteSnippets {
         val defaultValue = getString(R.string.current_user_id )
         val userId = sharedPref.getString(getString(R.string.current_user_id), defaultValue)
         if (userId != null) {
-            getContacts(userId) {
-                it.let {
-                    contactsAdapter.submitList(it as MutableList<Contact>)
+            getContacts(userId) { it ->
+                it.let { it ->
+                    contactsAdapter.submitList(it.sortedWith(compareBy(String.CASE_INSENSITIVE_ORDER, { it.contactName })) as MutableList<Contact>)
                     headerAdapter.updateContactCount(it.size)
                 }
             }
         }
-//        contactsListViewModel.contactLiveData.observe(this, {
-//            it?.let {
-//                contactsAdapter.submitList(it as MutableList<Contact>)
-//                headerAdapter.updateContactCount(it.size)
-//            }
-//        })
 
 //        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 //        supportActionBar?.setDisplayShowHomeEnabled(true)
@@ -90,20 +78,6 @@ class ProfileActivity : AppCompatActivity(), ReadAndWriteSnippets {
             addContactOnClick()
         }
     }
-
-//    override fun onDestroy() {
-//        super.onDestroy()
-//        LocalBroadcastManager.getInstance(this)
-//            .unregisterReceiver(broadCastReceiver)
-//    }
-
-//    val broadCastReceiver = object : BroadcastReceiver() {
-//        override fun onReceive(contxt: Context?, intent: Intent?) {
-//            when (intent?.action) {
-//                CONTACT_LIST_CHANGED -> contactsAdapter.notifyDataSetChanged()
-//            }
-//        }
-//    }
 
     /* Opens EditDetailActivity when RecyclerView item is clicked. */
     private fun adapterOnClick(contact: Contact) {
@@ -129,20 +103,14 @@ class ProfileActivity : AppCompatActivity(), ReadAndWriteSnippets {
             val defaultValue = getString(R.string.current_user_id )
             val userId = sharedPref.getString(getString(R.string.current_user_id), defaultValue)
             if (userId != null) {
-                getContacts(userId) {
-                    it.let {
-                        contactsAdapter.submitList(it as MutableList<Contact>)
+                getContacts(userId) { it ->
+                    it.let { it ->
+                        contactsAdapter.submitList(it.sortedWith(compareBy(String.CASE_INSENSITIVE_ORDER, { it.contactName })) as MutableList<Contact>)
                         headerAdapter.updateContactCount(it.size)
                         contactsAdapter.notifyDataSetChanged()
                     }
                 }
             }
-//            intentData?.let { data ->
-//                val contactName = data.getStringExtra(CONTACT_NAME)
-//                val contactPhone = data.getLongExtra(CONTACT_PHONE, -1)
-//                val contactEmail = data.getStringExtra(CONTACT_EMAIL)
-//                contactsListViewModel.insertContact(contactName, contactPhone, contactEmail)
-//            }
         }
     }
 
