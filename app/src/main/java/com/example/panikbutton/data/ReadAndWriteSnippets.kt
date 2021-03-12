@@ -22,34 +22,34 @@ interface ReadAndWriteSnippets {
     /** Add a new user to the database **/
     fun writeNewUser(userId: String, userName: String, userPhone: Long, userEmail: String) {
         val user = User(userId, userName, userPhone, userEmail)
-        database.child("users").child(userId.toString()).setValue(user)
+        database.child("users").child(userId).setValue(user)
 
     }
 
     /** Edit existing contact**/
     fun editUser(userId: String, userName: String, userPhone: Long, userEmail: String) {
         val user = User(userId, userName, userPhone, userEmail)
-        database.child("users").child(userId.toString()).setValue(user)
+        database.child("users").child(userId).setValue(user)
 
     }
 
-    /** Add a new user to the database with success/failure listeners **/
-    fun writeNewUserWithTaskListeners(userName: String, userPhone: Long, userEmail: String) {
-        val userId = Random.nextLong()
-        val user = User(userId.toString(), userName, userPhone, userEmail)
-
-        // Access userId from shared preferences
-
-        database.child(userId.toString()).child(userName).setValue(user)
-            .addOnSuccessListener {
-                // Write was successful!
-                // ...
-            }
-            .addOnFailureListener {
-                // Write failed
-                // ...
-            }
-    }
+//    /** Add a new user to the database with success/failure listeners **/
+//    fun writeNewUserWithTaskListeners(userName: String, userPhone: Long, userEmail: String) {
+//        val userId = Random.nextLong()
+//        val user = User(userId.toString(), userName, userPhone, userEmail)
+//
+//        // Access userId from shared preferences
+//
+//        database.child(userId.toString()).child(userName).setValue(user)
+//            .addOnSuccessListener {
+//                // Write was successful!
+//                // ...
+//            }
+//            .addOnFailureListener {
+//                // Write failed
+//                // ...
+//            }
+//    }
 
     /** Add a new contact to the database **/
     fun writeNewContact(userId: String, contactId: Int, contactName: String, contactPhone: Long, contactEmail: String) {
