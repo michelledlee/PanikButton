@@ -7,7 +7,10 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.telephony.SmsManager
+import android.text.TextUtils
+import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -40,13 +43,14 @@ class HomeActivity : AppCompatActivity(), ReadAndWriteSnippets {
                     // You can use the API that requires the permission.
                     sendSMS()
                 }
+
                 shouldShowRequestPermissionRationale(android.Manifest.permission.SEND_SMS) -> {
                 // In an educational UI, explain to the user why your app requires this
                 // permission for a specific feature to behave as expected. In this UI,
                 // include a "cancel" or "no thanks" button that allows the user to
                 // continue using your app without granting the permission.
 //                showInContextUI(...)
-            }
+                }
                 else -> {
                     // Request SMS permissions from the user
                     requestPermissions(arrayOf(android.Manifest.permission.SEND_SMS),
@@ -55,7 +59,7 @@ class HomeActivity : AppCompatActivity(), ReadAndWriteSnippets {
             }
 
 
-            sendEmail()
+//            sendEmail()
         }
     }
 
@@ -65,19 +69,25 @@ class HomeActivity : AppCompatActivity(), ReadAndWriteSnippets {
             this.getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE)
         val defaultValue = getString(R.string.current_user_id )
         val userId = sharedPref.getString(getString(R.string.current_user_id), defaultValue)
+        val userPhone = sharedPref.getString(getString(R.string.current_phone_name), defaultValue)
+        val userName = sharedPref.getString(getString(R.string.current_user_name), userPhone)
         if (userId != null) {
             // Get list from firebase based on userID
             getContacts(userId) { it ->
                 for (item in it) {
                     // Iterate through and send text messages
-//                    val uri = Uri.parse(item.contactPhone.toString())
-//                    val intent = Intent(Intent.ACTION_SENDTO, uri)
-//                    intent.putExtra("sms_body", resources.getString(R.string.default_text_message))
-//                    if (intent.resolveActivity(packageManager) != null) {
-//                        startActivity(intent)
-//                    }
-                    val smsManager = SmsManager.getDefault() as SmsManager
-                    smsManager.sendTextMessage(item.contactPhone.toString(), null, resources.getString(R.string.default_text_message), null, null)
+                    val smsManager: SmsManager = SmsManager.getDefault()
+                    val phoneNumber: String = item.contactPhone.toString()
+                    val contactName: String = item.contactName
+                    val smsMessage: String = String.format(resources.getString(R.string.default_text_message), userName)
+                    if (TextUtils.isDigitsOnly(phoneNumber)) {
+                        smsManager.sendTextMessage(phoneNumber, null, smsMessage, null, null)
+                        val verificationMsg: String = String.format(resources.getString(R.string.message_sent), contactName)
+                        Toast.makeText(this, verificationMsg, Toast.LENGTH_SHORT).show()
+                    } else {
+                        val message : String = String.format(getString(R.string.invalid_phone_number), contactName)
+                        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+                    }
 
                 }
             }
