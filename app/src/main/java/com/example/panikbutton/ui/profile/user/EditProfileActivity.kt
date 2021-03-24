@@ -89,6 +89,8 @@ class EditProfileActivity : AppCompatActivity(), ReadAndWriteSnippets {
             editUser(userId, inputtedName, inputtedPhone.toLong(), inputtedEmail)
         }
 
+        Toast.makeText(this, getString(R.string.saved), Toast.LENGTH_SHORT).show()
+
         return true
     }
 
