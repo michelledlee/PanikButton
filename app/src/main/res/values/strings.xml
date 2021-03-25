@@ -54,6 +54,7 @@
     <string name="label_send_email">send email</string>
     <string name="entered_user_info">enteredUserInfo</string>
     <string name="okay">Okay</string>
+    <string name="back">Back</string>
     <string name="welcome">Welcome!</string>
     <string name="intro">Please enter your user profile details which will be used in your emergency messages.</string>
     <string name="later">Later</string>

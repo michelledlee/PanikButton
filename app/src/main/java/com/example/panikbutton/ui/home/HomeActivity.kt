@@ -1,5 +1,6 @@
 package com.example.panikbutton.ui.home
 
+import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -10,6 +11,8 @@ import android.telephony.SmsManager
 import android.text.TextUtils
 import android.util.Log
 import android.view.View
+import android.view.Window
+import android.widget.Button
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
@@ -43,13 +46,12 @@ class HomeActivity : AppCompatActivity(), ReadAndWriteSnippets {
                     // You can use the API that requires the permission.
                     sendSMS()
                 }
-
                 shouldShowRequestPermissionRationale(android.Manifest.permission.SEND_SMS) -> {
                 // In an educational UI, explain to the user why your app requires this
                 // permission for a specific feature to behave as expected. In this UI,
                 // include a "cancel" or "no thanks" button that allows the user to
                 // continue using your app without granting the permission.
-//                showInContextUI(...)
+                showInContextUISMS()
                 }
                 else -> {
                     // Request SMS permissions from the user
@@ -57,10 +59,18 @@ class HomeActivity : AppCompatActivity(), ReadAndWriteSnippets {
                         REQUEST_CODE)
                 }
             }
-
-
 //            sendEmail()
         }
+    }
+
+    /** Displays dialog explaining why the SMS permissions is needed **/
+    private fun showInContextUISMS() {
+        val dialog = Dialog(this)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setContentView(R.layout.sms_permissions_layout)
+        val okayButton = dialog.findViewById<Button>(R.id.okay_sms_perm)
+        val cancelButton = dialog.findViewById<Button>(R.id.back_sms_perm)
+
     }
 
     /** Sends an SMS to each contact in the user's contact list **/
