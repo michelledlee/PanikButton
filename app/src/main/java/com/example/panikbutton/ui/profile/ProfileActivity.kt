@@ -1,19 +1,14 @@
 package com.example.panikbutton.ui.profile
 
 import android.app.Activity
-import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.content.IntentFilter
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import androidx.activity.viewModels
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.FragmentManager
-import androidx.localbroadcastmanager.content.LocalBroadcastManager
-import androidx.navigation.Navigation
-import androidx.navigation.Navigation.findNavController
 import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -21,8 +16,12 @@ import com.example.panikbutton.R
 import com.example.panikbutton.data.Contact
 import com.example.panikbutton.data.ReadAndWriteSnippets
 import com.example.panikbutton.ui.home.HomeActivity
-import com.example.panikbutton.ui.home.HomeFragment
-import com.example.panikbutton.ui.profile.contacts.*
+import com.example.panikbutton.ui.profile.contacts.AddContactActivity
+import com.example.panikbutton.ui.profile.contacts.ContactsAdapter
+import com.example.panikbutton.ui.profile.contacts.EditContactActivity
+import com.example.panikbutton.ui.profile.contacts.HeaderAdapter
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import com.google.firebase.database.DatabaseReference
 
 const val CONTACT_ID = "contact id"
@@ -30,23 +29,25 @@ const val CONTACT_ID = "contact id"
 class ProfileActivity : AppCompatActivity(), ReadAndWriteSnippets {
 
     private val newContactActivityRequestCode = 1
-
     override lateinit var database: DatabaseReference
     private lateinit var bottomNav: View
     private val contactsAdapter = ContactsAdapter { contact -> adapterOnClick(contact) }
     private val headerAdapter = HeaderAdapter()
     private val concatAdapter = ConcatAdapter(headerAdapter, contactsAdapter)
 
+    @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile)
 
+        initializeDbRef()   // Initialize Firebase reference
+
+        // Initialize Recyclerview for contacts list
         val recyclerView: RecyclerView = findViewById(R.id.contacts_recyclerView)
         recyclerView.adapter = concatAdapter
         recyclerView.layoutManager = LinearLayoutManager(this)
 
-        initializeDbRef()
-
+        // Get user details to retrieve contacts list from Firebase
         val sharedPref =
             this.getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE)
         val defaultValue = getString(R.string.current_user_id )
@@ -63,7 +64,7 @@ class ProfileActivity : AppCompatActivity(), ReadAndWriteSnippets {
 //        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 //        supportActionBar?.setDisplayShowHomeEnabled(true)
 
-
+        // Hook up home button
         bottomNav = findViewById(R.id.navigation_home)
         bottomNav.setOnClickListener {
 //            onBackPressed()
@@ -73,10 +74,13 @@ class ProfileActivity : AppCompatActivity(), ReadAndWriteSnippets {
             startActivity(intent)
         }
 
+        // Hook up add contact button
         val addContactButton: View = findViewById(R.id.add_contact)
         addContactButton.setOnClickListener {
             addContactOnClick()
         }
+
+
     }
 
     /* Opens EditDetailActivity when RecyclerView item is clicked. */
@@ -126,11 +130,13 @@ class ProfileActivity : AppCompatActivity(), ReadAndWriteSnippets {
 //        return super.onSupportNavigateUp()
 //    }
 
-    companion object {
-        fun start(context: Context) {
-            val intent = Intent(context, ProfileActivity::class.java)
-            context.startActivity(intent)
-        }
-    }
+//    companion object {
+//        fun start(context: Context) {
+//            val intent = Intent(context, ProfileActivity::class.java)
+//            context.startActivity(intent)
+//        }
+//    }
+
+
 
 }
