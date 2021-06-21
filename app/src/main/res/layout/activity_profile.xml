@@ -16,6 +16,7 @@
     android:paddingTop="@dimen/top_padding">
 
 
+
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/profile_fragment"
         android:name="com.example.panikbutton.ui.profile.user.ProfileFragment"

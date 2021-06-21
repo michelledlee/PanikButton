@@ -12,6 +12,8 @@ import android.os.Bundle
 import android.telephony.SmsManager
 import android.text.TextUtils
 import android.util.Log
+import android.view.Menu
+import android.view.MenuInflater
 import android.view.View
 import android.view.Window
 import android.widget.Button
@@ -86,6 +88,12 @@ class HomeActivity : AppCompatActivity(), ReadAndWriteSnippets {
 //                }
 //            }
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        val inflater: MenuInflater = menuInflater
+        inflater.inflate(R.menu.menu_main, menu)
+        return true
     }
 
     /** Displays dialog explaining why the SMS permissions is needed **/

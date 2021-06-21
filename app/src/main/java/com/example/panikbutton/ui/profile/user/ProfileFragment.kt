@@ -4,9 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.fragment.app.Fragment
 import com.example.panikbutton.R
 import kotlinx.android.synthetic.main.fragment_profile.view.*
@@ -54,6 +52,15 @@ class ProfileFragment : Fragment() {
         }
 
         return view
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_main, menu)
     }
 
     private fun formatPhone(number: String): String {

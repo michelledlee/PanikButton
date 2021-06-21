@@ -1,9 +1,7 @@
 package com.example.panikbutton.ui.home
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -13,6 +11,15 @@ import com.example.panikbutton.R
 class HomeFragment : Fragment() {
 
     private lateinit var homeViewModel: HomeViewModel
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_main, menu)
+    }
 
     override fun onCreateView(
             inflater: LayoutInflater,
@@ -28,4 +35,5 @@ class HomeFragment : Fragment() {
         })
         return root
     }
+
 }
