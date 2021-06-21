@@ -59,7 +59,7 @@ class HomeActivity : AppCompatActivity(), ReadAndWriteSnippets {
         panikButton.setOnClickListener {
 
             sendSMS()
-            lastLocation()
+//            lastLocation()
 //            // Check for SMS permissions when using this app
 //            when { // Ensure that permission has been granted
 //                ContextCompat.checkSelfPermission(this, android.Manifest.permission.SEND_SMS) == PackageManager.PERMISSION_GRANTED -> {
@@ -119,6 +119,7 @@ class HomeActivity : AppCompatActivity(), ReadAndWriteSnippets {
     }
 
     /** Sends an SMS to each contact in the user's contact list **/
+    @SuppressLint("MissingPermission")
     private fun sendSMS() {
         val sharedPref =
             this.getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE)
@@ -128,13 +129,23 @@ class HomeActivity : AppCompatActivity(), ReadAndWriteSnippets {
         val userName = sharedPref.getString(getString(R.string.current_user_name), userPhone)
         if (userId != null) {
             // Get list from firebase based on userID
+            var coord: String = ""
+            fusedLocationClient.lastLocation
+                .addOnSuccessListener { location : Location? ->
+                    // Got last known location. In some rare situations this can be null.
+                    if (location != null) {
+                        coord = String.format(resources.getString(R.string.coordinates), location.latitude, location.longitude)
+                        Log.e("coordinates:", coord)
+                    }
+                }
             getContacts(userId) { it ->
                 for (item in it) {
                     // Iterate through and send text messages
                     val smsManager: SmsManager = SmsManager.getDefault()
                     val phoneNumber: String = item.contactPhone.toString()
                     val contactName: String = item.contactName
-                    val smsMessage: String = String.format(resources.getString(R.string.default_text_message), userName)
+                    val smsMessage: String = String.format(resources.getString(R.string.default_text_message), userName, coord)
+
                     if (TextUtils.isDigitsOnly(phoneNumber)) {
                         smsManager.sendTextMessage(phoneNumber, null, smsMessage, null, null)
                         val verificationMsg: String = String.format(resources.getString(R.string.message_sent), contactName)
@@ -149,38 +160,39 @@ class HomeActivity : AppCompatActivity(), ReadAndWriteSnippets {
         }
     }
 
-    /** Get the users last known location **/
-    @SuppressLint("MissingPermission")
-    @RequiresApi(Build.VERSION_CODES.M)
-    private fun lastLocation() {
-//        if (ActivityCompat.checkSelfPermission(
-//                this,
-//                android.Manifest.permission.ACCESS_FINE_LOCATION
-//            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-//                this,
-//                android.Manifest.permission.ACCESS_COARSE_LOCATION
-//            ) != PackageManager.PERMISSION_GRANTED
-//        ) {
-//            // TODO: Consider calling
-//            //    ActivityCompat#requestPermissions
-//            // here to request the missing permissions, and then overriding
-//            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-//            //                                          int[] grantResults)
-//            // to handle the case where the user grants the permission. See the documentation
-//            // for ActivityCompat#requestPermissions for more details.
-//            requestPermissions(arrayOf(android.Manifest.permission.ACCESS_BACKGROUND_LOCATION), REQUEST_CODE)
-//            requestPermissions(arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION), REQUEST_CODE)
-//            return
-//        }
-        fusedLocationClient.lastLocation
-            .addOnSuccessListener { location : Location? ->
-                // Got last known location. In some rare situations this can be null.
-                if (location != null) {
-                    val coord = location.latitude.plus(location.longitude)
-                    Log.e("coordinates:", coord.toString())
-                }
-            }
-    }
+//    /** Get the users last known location **/
+//    @SuppressLint("MissingPermission")
+//    @RequiresApi(Build.VERSION_CODES.M)
+//    private fun lastLocation() {
+////        if (ActivityCompat.checkSelfPermission(
+////                this,
+////                android.Manifest.permission.ACCESS_FINE_LOCATION
+////            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+////                this,
+////                android.Manifest.permission.ACCESS_COARSE_LOCATION
+////            ) != PackageManager.PERMISSION_GRANTED
+////        ) {
+////            // TODO: Consider calling
+////            //    ActivityCompat#requestPermissions
+////            // here to request the missing permissions, and then overriding
+////            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+////            //                                          int[] grantResults)
+////            // to handle the case where the user grants the permission. See the documentation
+////            // for ActivityCompat#requestPermissions for more details.
+////            requestPermissions(arrayOf(android.Manifest.permission.ACCESS_BACKGROUND_LOCATION), REQUEST_CODE)
+////            requestPermissions(arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION), REQUEST_CODE)
+////            return
+////        }
+//        fusedLocationClient.lastLocation
+//            .addOnSuccessListener { location : Location? ->
+//                // Got last known location. In some rare situations this can be null.
+//                if (location != null) {
+//                    val coord = location.latitude.plus(location.longitude)
+//                    Log.e("coordinates:", coord.toString())
+//
+//                }
+//            }
+//    }
 
 //    /** Sends an email to each contact in the user's contact list **/
 //    private fun sendEmail() {

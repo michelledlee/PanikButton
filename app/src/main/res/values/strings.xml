@@ -47,7 +47,8 @@
     <string name="delete">Delete</string>
     <string name="edit_profile_title">Edit Profile</string>
     <string name="new_profile">New Profile</string>
-    <string name="default_text_message">%1$s needs emergency assistance. Please contact the local authorities for help as soon as possible.</string>
+    <string name="default_text_message">%1$s needs emergency assistance. Coordinates at %2$s. Please contact the local authorities for help as soon as possible.</string>
+    <string name="coordinates">lat: %1$f; long: %2$f</string>
     <string name="default_email_subject">%1$s needs emergency assistance</string>
     <string name="invalid_phone_number">Phone number is invalid for %1$s</string>
     <string name="message_sent">Message sent to %1$s</string>
