@@ -12,10 +12,7 @@ import android.os.Bundle
 import android.telephony.SmsManager
 import android.text.TextUtils
 import android.util.Log
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.View
-import android.view.Window
+import android.view.*
 import android.widget.Button
 import android.widget.Toast
 import androidx.annotation.RequiresApi
@@ -24,6 +21,10 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.example.panikbutton.R
 import com.example.panikbutton.data.ReadAndWriteSnippets
+import com.example.panikbutton.ui.about.AboutActivity
+import com.example.panikbutton.ui.profile.ProfileActivity
+import com.example.panikbutton.ui.profile.user.EditProfileActivity
+import com.example.panikbutton.ui.settings.SettingsActivity
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.firebase.database.DatabaseReference
@@ -90,10 +91,49 @@ class HomeActivity : AppCompatActivity(), ReadAndWriteSnippets {
         }
     }
 
+    /** Create options menu **/
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         val inflater: MenuInflater = menuInflater
         inflater.inflate(R.menu.menu_main, menu)
         return true
+    }
+
+    /** Setting up menu options **/
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        // Handle item selection
+        return when (item.itemId) {
+            R.id.action_profile -> {
+                launchProfile()
+                true
+            }
+            R.id.action_settings -> {
+                launchSettings()
+                true
+            }
+            R.id.action_about -> {
+                launchAbout()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    /** Brings user to the Profile screen via menu selection  **/
+    private fun launchProfile() {
+        val intent = Intent (this, ProfileActivity::class.java)
+        startActivity(intent)
+    }
+
+    /** Brings user to the Settings screen via menu selection **/
+    private fun launchSettings() {
+        val intent = Intent (this, SettingsActivity::class.java)
+        startActivity(intent)
+    }
+
+    /** Brings user to the About screen via menu selection **/
+    private fun launchAbout() {
+        val intent = Intent (this, AboutActivity::class.java)
+        startActivity(intent)
     }
 
     /** Displays dialog explaining why the SMS permissions is needed **/
