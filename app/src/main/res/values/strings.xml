@@ -80,7 +80,7 @@
     <string name="unenroll_mfa">Unenroll MFA</string>
 
     <string name="multi_factor_signed_out">You are not signed in. To use this sample, first navigate to the Email/Password example to sign in and then return here to enroll in multi-factor auth.</string>
-    <string name="background_location_title">Background Location Permissions Request</string>
+    <string name="background_location_title">Location Permissions Request</string>
     <string name="background_location_info">This app requests your background location permissions to get the most accurate and up-to-date GPS information about your whereabouts to remit to your contacts.</string>
     <string name="sms_permissions_title">SMS Permissions Request</string>
     <string name="sms_permissions_info">This app requests access to SMS to send notifications to your contacts about your emergency request.</string>
