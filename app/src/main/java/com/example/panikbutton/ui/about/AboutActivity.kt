@@ -26,7 +26,9 @@ class AboutActivity : AppCompatActivity() {
 
         bottomNav = findViewById(R.id.navigation_home)
         bottomNav.setOnClickListener {
-            onBackPressed()
+//            onBackPressed()
+            val intent = Intent(this, HomeActivity::class.java)
+            startActivity(intent)
         }
     }
 
