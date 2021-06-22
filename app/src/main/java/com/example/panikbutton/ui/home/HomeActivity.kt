@@ -38,7 +38,7 @@ class HomeActivity : AppCompatActivity(), ReadAndWriteSnippets {
     override lateinit var database: DatabaseReference
     private lateinit var fusedLocationClient: FusedLocationProviderClient
 
-    @RequiresApi(Build.VERSION_CODES.Q)
+    @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.fragment_home)
@@ -119,6 +119,7 @@ class HomeActivity : AppCompatActivity(), ReadAndWriteSnippets {
             ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION), requestCode)
         } else {
             Toast.makeText(this, "GPS already granted", Toast.LENGTH_SHORT).show()
+            sendSMS()
         }
 
     }
@@ -149,7 +150,6 @@ class HomeActivity : AppCompatActivity(), ReadAndWriteSnippets {
 
     /** Sends an SMS to each contact in the user's contact list **/
     @SuppressLint("MissingPermission")
-    @RequiresApi(Build.VERSION_CODES.M)
     private fun sendSMS() {
         val sharedPref =
             this.getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE)
@@ -191,7 +191,6 @@ class HomeActivity : AppCompatActivity(), ReadAndWriteSnippets {
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.M)
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
         when (requestCode) {
             1 -> {
