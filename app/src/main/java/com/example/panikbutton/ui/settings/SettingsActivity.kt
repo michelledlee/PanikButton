@@ -1,6 +1,5 @@
 package com.example.panikbutton.ui.settings
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
@@ -12,6 +11,7 @@ import com.example.panikbutton.R
 import com.example.panikbutton.ui.about.AboutActivity
 import com.example.panikbutton.ui.home.HomeActivity
 import com.example.panikbutton.ui.profile.ProfileActivity
+
 
 class SettingsActivity : AppCompatActivity() {
 
@@ -28,7 +28,16 @@ class SettingsActivity : AppCompatActivity() {
         bottomNav.setOnClickListener {
             onBackPressed()
         }
+
+
+        //Connect ble button
+        val connectButton: View = findViewById(com.example.panikbutton.R.id.connect_button)
+        connectButton.setOnClickListener {
+
+        }
+
     }
+
 
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()

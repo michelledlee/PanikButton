@@ -15,6 +15,7 @@
     <string name="save_text">Save</string>
     <string name="back_text">Back</string>
     <string name="preference_file_key">com.example.panikbutton_PREFERENCE_FILE_KEY</string>
+
     <string name="user_name">User name not provided.</string>
     <string name="user_phone">__________</string>
     <string name="user_email">User email not provided.</string>
@@ -29,6 +30,7 @@
     <string name="updated_phone">Phone: %s</string>
     <string name="updated_email">Email: %s</string>
     <string name="required">&lt;required&gt;</string>
+
     <string name="add_contact">Add Contact</string>
     <string name="hint_name">Enter name</string>
     <string name="hint_phone">Enter phone</string>
@@ -47,6 +49,7 @@
     <string name="delete">Delete</string>
     <string name="edit_profile_title">Edit Profile</string>
     <string name="new_profile">New Profile</string>
+
     <string name="default_text_message">%1$s needs emergency assistance. Coordinates at %2$s. Please contact the local authorities for help as soon as possible.</string>
     <string name="coordinates">lat: %1$f; long: %2$f</string>
     <string name="default_email_subject">%1$s needs emergency assistance</string>
@@ -60,6 +63,7 @@
     <string name="intro">Please enter your user profile details which will be used in your emergency messages.</string>
     <string name="later">Later</string>
     <string name="contactsURI"></string>
+
     <string name="signed_out">signed out</string>
     <string name="emailpassword_title_text">Sign In Page</string>
     <string name="hint_password">Enter password</string>
@@ -74,9 +78,19 @@
     <string name="label_multi_factor">Multi-Factor Authentication</string>
     <string name="enroll_mfa">Enroll MFA</string>
     <string name="unenroll_mfa">Unenroll MFA</string>
+
     <string name="multi_factor_signed_out">You are not signed in. To use this sample, first navigate to the Email/Password example to sign in and then return here to enroll in multi-factor auth.</string>
     <string name="background_location_title">Background Location Permissions Request</string>
     <string name="background_location_info">This app requests your background location permissions to get the most accurate and up-to-date GPS information about your whereabouts to remit to your contacts.</string>
     <string name="sms_permissions_title">SMS Permissions Request</string>
     <string name="sms_permissions_info">This app requests access to SMS to send notifications to your contacts about your emergency request.</string>
+
+    <string name="tag_description">Image of Bluetooth connectivity device</string>
+    <string name="not_connected">Not Connected</string>
+    <string name="connected">Connected</string>
+    <string name="tag_id_title">Tag ID Number:</string>
+    <string name="send_alert">Send Alert: Two short clicks</string>
+    <string name="cancel_alert">Cancel Alert: Long hold</string>
+    <string name="instructions_title">Instructions</string>
+
 </resources>
