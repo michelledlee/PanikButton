@@ -12,6 +12,7 @@ import android.view.MenuItem
 import android.view.View
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -65,15 +66,9 @@ class ProfileActivity : AppCompatActivity(), ReadAndWriteSnippets {
             }
         }
 
-//        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-//        supportActionBar?.setDisplayShowHomeEnabled(true)
-
         // Hook up home button
         bottomNav = findViewById(R.id.navigation_home)
         bottomNav.setOnClickListener {
-//            onBackPressed()
-//            val homeFragment = HomeFragment()
-//            supportFragmentManager.beginTransaction().add(R.id.home_fragment, homeFragment)
             val intent = Intent(this, HomeActivity::class.java)
             startActivity(intent)
         }
@@ -83,8 +78,6 @@ class ProfileActivity : AppCompatActivity(), ReadAndWriteSnippets {
         addContactButton.setOnClickListener {
             addContactOnClick()
         }
-
-
     }
 
     /** Create options menu **/
@@ -166,26 +159,5 @@ class ProfileActivity : AppCompatActivity(), ReadAndWriteSnippets {
             }
         }
     }
-
-//    override fun onSupportNavigateUp(): Boolean {
-//        try {
-//            findNavController(bottomNav).getBackStackEntry(R.id.home_fragment)
-//        } catch (ignored: Throwable) {
-////            onBackPressed()
-//            val homeFragment = HomeFragment()
-//            supportFragmentManager.beginTransaction().add(R.id.home_fragment, homeFragment)
-//        }
-//        onBackPressed()
-//        return super.onSupportNavigateUp()
-//    }
-
-//    companion object {
-//        fun start(context: Context) {
-//            val intent = Intent(context, ProfileActivity::class.java)
-//            context.startActivity(intent)
-//        }
-//    }
-
-
 
 }

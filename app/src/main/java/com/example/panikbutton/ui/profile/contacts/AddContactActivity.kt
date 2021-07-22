@@ -45,14 +45,13 @@ class AddContactActivity : AppCompatActivity(), ReadAndWriteSnippets {
         addContactEmail = findViewById(R.id.add_contact_email)
 
         // Initialize Firebase
-//        database = Firebase.database.reference
         initializeDbRef()
 
     }
 
-    /* The onClick action for the done button. Closes the activity and returns the new contact name
+    /** The onClick action for the done button. Closes the activity and returns the new contact name
     and description as part of the intent. If the name or description are missing, the result is set
-    to cancelled. */
+    to cancelled. **/
     private fun addContact(): Boolean {
         val resultIntent = Intent()
 

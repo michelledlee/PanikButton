@@ -14,6 +14,7 @@ import android.text.TextUtils
 import android.util.Log
 import android.view.*
 import android.widget.Button
+import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
@@ -52,6 +53,7 @@ class HomeActivity : AppCompatActivity(), ReadAndWriteSnippets {
         panikButton.setOnClickListener {
             checkSMSPermission(SMS_CODE)
             checkGPSPermission(GPS_CODE)
+            makeCall()
 //            sendSMS()
         }
     }
@@ -146,6 +148,30 @@ class HomeActivity : AppCompatActivity(), ReadAndWriteSnippets {
         okayButton.setOnClickListener() {
             dialog.dismiss()
         }
+    }
+
+    /** Calls the primary contact on emergency button press**/
+    private fun makeCall() {
+        val sharedPref = getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE)
+
+        val primaryContactPhoneValue = resources.getString(R.string.primary_contact_number)
+        val primaryPhone = sharedPref?.getString(getString(R.string.primary_contact_number), primaryContactPhoneValue)
+        Log.e("primaryPhone", primaryPhone.toString())
+
+        // Check if primaryPhone is a number
+        if (primaryPhone.equals("None")) {
+            val message : String = String.format(getString(R.string.call_failed))
+            Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+            Log.e("fail", primaryPhone.toString())
+        } else {
+            val dialIntent = Intent(Intent.ACTION_DIAL)
+            dialIntent.data = Uri.parse("tel:" + primaryPhone)
+            startActivity(dialIntent)
+            val message : String = String.format(getString(R.string.call_success))
+            Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+            Log.e("success", primaryPhone.toString())
+        }
+
     }
 
     /** Sends an SMS to each contact in the user's contact list **/

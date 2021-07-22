@@ -121,12 +121,13 @@ class EditContactActivity : AppCompatActivity(), ReadAndWriteSnippets {
 
     /** Sets a primary as a primary contact**/
     private fun setPrimaryContact() {
-        val sharedPref = getPreferences(Context.MODE_PRIVATE) ?: return
+        val sharedPref = getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE)
         with (sharedPref.edit()) {
             putString(getString(R.string.primary_contact_number), editContactPhone.text.toString())
+            Log.e("saving:", editContactPhone.text.toString())
+            apply()
             val confirmationToast = Toast.makeText(applicationContext,"Set primary contact",Toast.LENGTH_SHORT)
             confirmationToast.show()
-            apply()
         }
     }
 
