@@ -3,10 +3,12 @@ package com.example.panikbutton.ui.profile.contacts
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
 import android.widget.Button
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.text.isDigitsOnly
@@ -60,21 +62,21 @@ class EditContactActivity : AppCompatActivity(), ReadAndWriteSnippets {
             }
         }
 
-        // Hooking up save button
+        // Hooking up save, delete, and set primary contact button
         findViewById<Button>(R.id.save_contact_profile).setOnClickListener {
             if (editContact()) {
                 finish()
             }
         }
-
-        /* If currentContactId is not null, get corresponding contact details */
-//        currentContactId.let {
         findViewById<Button>(R.id.delete_contact_button).setOnClickListener {
             if (deleteContact()) {
                 finish()
             }
         }
-//        }
+        findViewById<Button>(R.id.primary_contact).setOnClickListener {
+            setPrimaryContact()
+        }
+
     }
 
     /** The onClick action for the done button. Closes the activity and returns the new contact name
@@ -109,12 +111,23 @@ class EditContactActivity : AppCompatActivity(), ReadAndWriteSnippets {
         return true
     }
 
-    /** **/
+    /** Deletes a contact **/
     private fun deleteContact(): Boolean {
         val resultIntent = Intent()
         deleteContactFromFirebase(userId, currentContactId)
         setResult(Activity.RESULT_OK, resultIntent)
         return true
+    }
+
+    /** Sets a primary as a primary contact**/
+    private fun setPrimaryContact() {
+        val sharedPref = getPreferences(Context.MODE_PRIVATE) ?: return
+        with (sharedPref.edit()) {
+            putString(getString(R.string.primary_contact_number), editContactPhone.text.toString())
+            val confirmationToast = Toast.makeText(applicationContext,"Set primary contact",Toast.LENGTH_SHORT)
+            confirmationToast.show()
+            apply()
+        }
     }
 
     /** Validate phone number so it can be formatted correctly in UI **/

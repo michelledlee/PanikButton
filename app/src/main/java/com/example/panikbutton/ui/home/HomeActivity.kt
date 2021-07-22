@@ -191,6 +191,7 @@ class HomeActivity : AppCompatActivity(), ReadAndWriteSnippets {
         }
     }
 
+    /** Method that is called on receipt of permissions request to user **/
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
         when (requestCode) {
             1 -> {

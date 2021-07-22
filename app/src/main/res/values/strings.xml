@@ -49,6 +49,8 @@
     <string name="delete">Delete</string>
     <string name="edit_profile_title">Edit Profile</string>
     <string name="new_profile">New Profile</string>
+    <string name="set_primary_contact">Set Primary Contact</string>
+    <string name="primary_contact_number"></string>
 
     <string name="default_text_message">%1$s needs emergency assistance. Coordinates at %2$s. Please contact the local authorities for help as soon as possible.</string>
     <string name="coordinates">lat: %1$f; long: %2$f</string>
